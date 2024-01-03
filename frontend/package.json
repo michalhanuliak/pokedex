@@ -26,6 +26,7 @@
     "react-infinite-scroller": "^1.2.6",
     "react-modal": "^3.16.1",
     "react-parallax-tilt": "^1.7.186",
+    "react-use": "^17.5.0",
     "react-window-infinite-loader": "^1.0.9"
   },
   "devDependencies": {
