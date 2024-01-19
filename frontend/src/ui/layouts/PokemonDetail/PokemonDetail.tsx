@@ -9,7 +9,7 @@ export type PokemonDetailProps = {
 }
 
 export function PokemonDetail({ name }: PokemonDetailProps) {
-  const { pokemon, isLoading } = useGetPokemonByName(name)
+  const { pokemon, isLoading, handlePlaySound } = useGetPokemonByName(name)
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -21,6 +21,7 @@ export function PokemonDetail({ name }: PokemonDetailProps) {
 
   return (
     <Card>
+      <button onClick={handlePlaySound}>Play</button>
       <PokemonCardHeader
         pokemon={pokemon}
         imageProps={{

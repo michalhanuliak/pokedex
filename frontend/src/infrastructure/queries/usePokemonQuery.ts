@@ -28,6 +28,7 @@ const POKEMON_DETAIL_FRAGMENT = gql`
   ${POKEMON_FRAGMENT}
   fragment PokemonDetail on Pokemon {
     ...Pokemon
+    sound
     weight {
       maximum
       minimum

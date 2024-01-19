@@ -6,6 +6,7 @@ import {
   useGetPokemonsQuery,
   useUnFavoritePokemonMutation,
 } from '@/infrastructure/queries/usePokemonQuery'
+import { createAudioUrl } from '@/utils'
 import { useApolloClient } from '@apollo/client'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -77,7 +78,7 @@ export function useFavoritePokemon() {
 
   return {
     isLoading,
-    onPokemonFavorite: handleFavoritePokemon,
+    handleFavoritePokemon,
   }
 }
 
@@ -102,7 +103,7 @@ export function useUnFavoritePokemon() {
 
   return {
     isLoading,
-    onPokemonUnFavorite: handleUnFavoritePokemon,
+    handleUnFavoritePokemon,
   }
 }
 
@@ -118,5 +119,22 @@ export function useGetPokemonByName(name: string) {
 
   const pokemon = data?.pokemonByName
 
-  return { pokemon, isLoading }
+  const getSoundUrl = async () => {
+    if (!pokemon) return
+    const audio = await fetch(pokemon.sound, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
+
+    return createAudioUrl(await audio.arrayBuffer())
+  }
+
+  const handlePlaySound = async () => {
+    const url = await getSoundUrl()
+    const audio = new Audio(url)
+    audio.play()
+  }
+
+  return { pokemon, isLoading, handlePlaySound }
 }

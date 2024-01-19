@@ -16,12 +16,14 @@ export function PokemonCardHeader({
   imageProps,
   hideTypes = false,
 }: PokemonCardHeaderProps) {
-  const { onPokemonFavorite, isLoading: isFavouriteMutating } =
+  const { handleFavoritePokemon, isLoading: isFavouriteMutating } =
     useFavoritePokemon()
-  const { onPokemonUnFavorite, isLoading: isUnFavouriteMutating } =
+  const { handleUnFavoritePokemon, isLoading: isUnFavouriteMutating } =
     useUnFavoritePokemon()
 
-  const onFavoriteChange = isFavorite ? onPokemonUnFavorite : onPokemonFavorite
+  const onFavoriteChange = isFavorite
+    ? handleFavoritePokemon
+    : handleUnFavoritePokemon
   return (
     <CardHeader
       imageProps={{

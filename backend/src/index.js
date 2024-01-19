@@ -4,6 +4,7 @@ const express = require('express');
 const fs = require('fs');
 const _ = require('lodash');
 const pokemonsData = require('./pokemons');
+const cors = require("cors");
 
 const PORT = 4000;
 const BASE_URL = `http://localhost:${PORT}`;
@@ -12,6 +13,9 @@ const typeDefs = fs.readFileSync(`${__dirname}/schema.graphql`, 'utf-8');
 let favorites = new Map();
 
 const app = express();
+
+app.use(cors());
+
 app.get('/sounds/:id', (req, res) => res.sendFile(`${__dirname}/sounds/${req.params.id}.mp3`));
 
 const resolvers = {

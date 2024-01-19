@@ -1,9 +1,5 @@
 'use client'
-import {
-  useFavoritePokemon,
-  useGetAllPokemons,
-  useUnFavoritePokemon,
-} from '@/adapters/usePokemons'
+import { useGetAllPokemons } from '@/adapters/usePokemons'
 import { Category, Filters } from '@/domain'
 import { PokemonCard } from '@/ui/molecules/PokemonCard'
 import { PokemonCardHeader } from '@/ui/organisms/PokemonCardHeader'
@@ -20,11 +16,6 @@ export function PokemonGrid({ activeCategory, filters }: PokemonGridProps) {
     activeCategory,
     filters,
   )
-
-  const { onPokemonFavorite, isLoading: isFavouriteMutating } =
-    useFavoritePokemon()
-  const { onPokemonUnFavorite, isLoading: isUnFavouriteMutating } =
-    useUnFavoritePokemon()
 
   const renderedPokemons = pokemons.map((pokemon) => {
     const { id, name } = pokemon
