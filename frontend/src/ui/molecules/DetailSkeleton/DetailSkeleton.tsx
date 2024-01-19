@@ -5,16 +5,20 @@ import styles from './styles.module.scss'
 
 export type DetailSkeletonProps = {
   title: string
+  disableThrottle?: boolean
 }
 
-export function DetailSkeleton({ title }: DetailSkeletonProps) {
+export function DetailSkeleton({
+  title,
+  disableThrottle = false,
+}: DetailSkeletonProps) {
   const [isLoadingSlow, setIsLoadingSlow] = useState(false)
 
   setTimeout(() => {
     setIsLoadingSlow(true)
   }, 500)
 
-  if (!isLoadingSlow) {
+  if (!disableThrottle && !isLoadingSlow) {
     return
   }
 

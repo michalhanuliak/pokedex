@@ -1,13 +1,14 @@
 import { render, screen } from '@testing-library/react'
+
 import { expect, test } from 'vitest'
 
-import { Stack } from '.'
+import { Card } from '.'
 
-test('Stack', () => {
+test('Card', () => {
   render(
-    <Stack>
+    <Card>
       <div id="test">test</div>
-    </Stack>,
+    </Card>,
   )
-  expect(screen.getAllByText('test')).toBeDefined()
+  expect(screen.getByText('test')).toBeDefined()
 })
