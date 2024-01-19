@@ -10,18 +10,49 @@ import {
   MutationFavoritePokemonArgs,
   MutationUnFavoritePokemonArgs,
   Query,
+  QueryPokemonByNameArgs,
   QueryPokemonsArgs,
 } from '../generated/types'
 
+const POKEMON_FRAGMENT = gql`
+  fragment Pokemon on Pokemon {
+    id
+    name
+    types
+    image
+    isFavorite
+  }
+`
+
+const POKEMON_DETAIL_FRAGMENT = gql`
+  ${POKEMON_FRAGMENT}
+  fragment PokemonDetail on Pokemon {
+    ...Pokemon
+    weight {
+      maximum
+      minimum
+    }
+    height {
+      maximum
+      minimum
+    }
+    maxHP
+    maxCP
+    evolutions {
+      id
+      name
+      image
+      isFavorite
+    }
+  }
+`
+
 export const GET_POKEMONS = gql`
+  ${POKEMON_FRAGMENT}
   query GetPokemons($query: PokemonsQueryInput!) {
     pokemons(query: $query) {
       edges {
-        id
-        name
-        types
-        image
-        isFavorite
+        ...Pokemon
       }
     }
   }
@@ -34,9 +65,10 @@ export const useGetPokemonsQuery = (
 }
 
 export const FAVORITE_POKEMON_MUTATION = gql`
+  ${POKEMON_FRAGMENT}
   mutation FavoritePokemon($id: ID!) {
     favoritePokemon(id: $id) {
-      id
+      ...Pokemon
     }
   }
 `
@@ -51,9 +83,10 @@ export const useFavoritePokemonMutation = (
 }
 
 export const UNFAVORITE_POKEMON_MUTATION = gql`
+  ${POKEMON_FRAGMENT}
   mutation UnFavoritePokemon($id: ID!) {
     unFavoritePokemon(id: $id) {
-      id
+      ...Pokemon
     }
   }
 `
@@ -65,4 +98,19 @@ export const useUnFavoritePokemonMutation = (
     UNFAVORITE_POKEMON_MUTATION,
     baseOptions,
   )
+}
+
+export const GET_POKEMON = gql`
+  ${POKEMON_DETAIL_FRAGMENT}
+  query GetPokemonByName($name: String!) {
+    pokemonByName(name: $name) {
+      ...PokemonDetail
+    }
+  }
+`
+
+export const useGetPokemonQuery = (
+  baseOptions?: QueryHookOptions<Query, QueryPokemonByNameArgs>,
+) => {
+  return useQuery<Query, QueryPokemonByNameArgs>(GET_POKEMON, baseOptions)
 }

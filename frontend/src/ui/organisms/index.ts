@@ -1,2 +1,2 @@
-export * from './PokemonCard'
+export * from '../molecules/PokemonCard'
 export * from './PokemonTabs'

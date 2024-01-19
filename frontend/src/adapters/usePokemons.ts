@@ -2,6 +2,7 @@ import { Category, Filters } from '@/domain'
 import {
   GET_POKEMONS,
   useFavoritePokemonMutation,
+  useGetPokemonQuery,
   useGetPokemonsQuery,
   useUnFavoritePokemonMutation,
 } from '@/infrastructure/queries/usePokemonQuery'
@@ -63,7 +64,9 @@ export function useFavoritePokemon() {
     },
   })
 
-  const handleFavoritePokemon = (id: string) => {
+  const handleFavoritePokemon = (id?: string) => {
+    if (!id) return
+
     favoritePokemon({
       variables: { id },
     })
@@ -88,7 +91,9 @@ export function useUnFavoritePokemon() {
       },
     })
 
-  const handleUnFavoritePokemon = (id: string) => {
+  const handleUnFavoritePokemon = (id?: string) => {
+    if (!id) return
+
     unFavoritePokemon({ variables: { id } })
     apolloClient.refetchQueries({
       include: [GET_POKEMONS],
@@ -99,4 +104,19 @@ export function useUnFavoritePokemon() {
     isLoading,
     onPokemonUnFavorite: handleUnFavoritePokemon,
   }
+}
+
+export function useGetPokemonByName(name: string) {
+  const { data, loading: isLoading } = useGetPokemonQuery({
+    variables: {
+      name,
+    },
+    onError: (error) => {
+      console.error(error)
+    },
+  })
+
+  const pokemon = data?.pokemonByName
+
+  return { pokemon, isLoading }
 }

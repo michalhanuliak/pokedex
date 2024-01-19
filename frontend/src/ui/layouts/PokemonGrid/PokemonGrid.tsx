@@ -5,7 +5,8 @@ import {
   useUnFavoritePokemon,
 } from '@/adapters/usePokemons'
 import { Category, Filters } from '@/domain'
-import { PokemonCard } from '@/ui/organisms/PokemonCard'
+import { PokemonCard } from '@/ui/molecules/PokemonCard'
+import { PokemonCardHeader } from '@/ui/organisms/PokemonCardHeader'
 import InfiniteScroll from 'react-infinite-scroller'
 import styles from './styles.module.scss'
 
@@ -25,26 +26,21 @@ export function PokemonGrid({ activeCategory, filters }: PokemonGridProps) {
   const { onPokemonUnFavorite, isLoading: isUnFavouriteMutating } =
     useUnFavoritePokemon()
 
-  const renderedPokemons = pokemons.map(
-    ({ id, name, image, types, isFavorite }) => {
-      const onFavoriteChange = isFavorite
-        ? onPokemonUnFavorite
-        : onPokemonFavorite
-      return (
-        <PokemonCard
-          key={id}
-          name={name}
-          imageSrc={image}
-          types={types}
-          favorite={isFavorite}
-          onFavoriteChange={(e) => {
-            e.preventDefault()
-            onFavoriteChange(id)
+  const renderedPokemons = pokemons.map((pokemon) => {
+    const { id, name } = pokemon
+    return (
+      <PokemonCard key={id} href={`/${name.toLowerCase().replace(' ', '-')}`}>
+        <PokemonCardHeader
+          pokemon={pokemon}
+          imageProps={{
+            alt: `Pokemon ${name}`,
+            width: 300,
+            height: 300,
           }}
         />
-      )
-    },
-  )
+      </PokemonCard>
+    )
+  })
 
   return (
     <InfiniteScroll pageStart={0} loadMore={loadNextPage} hasMore={!isLoading}>

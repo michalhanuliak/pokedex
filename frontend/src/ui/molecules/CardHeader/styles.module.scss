@@ -1,0 +1,19 @@
+.main {
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.detail {
+  flex: 3;
+}
+
+.icon {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}

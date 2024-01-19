@@ -1,3 +1,5 @@
+import { PokemonDetail } from '@/ui/layouts/PokemonDetail/PokemonDetail'
+
 type Props = {
   params: {
     name: string
@@ -5,5 +7,9 @@ type Props = {
 }
 
 export default function Detail({ params }: Props) {
-  return <main>Hello {params.name}</main>
+  return (
+    <main>
+      <PokemonDetail name={params.name} />
+    </main>
+  )
 }
