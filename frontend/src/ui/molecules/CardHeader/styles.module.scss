@@ -6,16 +6,23 @@
   }
 }
 
+.image {
+  object-fit: contain;
+  max-width: 100%;
+}
+
 .hidden {
   display: none;
 }
 .container {
+  justify-content: space-between;
+  align-items: center;
+  border-top: 0.1rem solid var(--color-primary);
   width: 100%;
-  background: rgba(0, 0, 0, 0.2);
+  padding: 1.2rem 0.6rem;
 }
 
 .detail {
-  flex: 3;
   &.flat {
     flex: 90;
     flex-direction: row;
@@ -23,9 +30,10 @@
 }
 
 .icon {
-  flex: 1;
+  display: flex;
+  flex: 0;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   &.flat {
     flex: 10;
   }

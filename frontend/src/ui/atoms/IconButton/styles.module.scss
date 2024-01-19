@@ -1,0 +1,22 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  width: 4rem;
+  height: 4rem;
+  padding: 0.6rem;
+  background: transparent;
+  border-radius: 10rem;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0.7rem 0.2rem rgba(0, 0, 0, 0.05);
+    &.noShadow {
+      box-shadow: none;
+    }
+  }
+  &.active {
+    box-shadow: 0 0 0.7rem 0.2rem rgba(0, 0, 0, 0.05);
+  }
+}

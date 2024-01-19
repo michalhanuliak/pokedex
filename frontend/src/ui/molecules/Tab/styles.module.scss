@@ -1,12 +1,17 @@
 .main {
   display: flex;
-  flex: 1;
   align-items: center;
   justify-content: center;
-  border: 0.1rem solid gray;
-  height: 3rem;
+  padding: 2rem;
+  font-weight: 500;
+  transition: all 0.1s;
+  position: relative;
+  color: var(--color-secondary);
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .active {
-  background: gray;
+  border-bottom: 0.3rem solid var(--color-secondary);
 }

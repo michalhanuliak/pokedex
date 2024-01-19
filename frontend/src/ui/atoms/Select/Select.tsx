@@ -1,4 +1,6 @@
+import classNames from 'classnames'
 import { ChangeEvent, HTMLAttributes } from 'react'
+import styles from './styles.module.scss'
 
 export type OptionProps = {
   label: string
@@ -15,7 +17,12 @@ export type SelectProps = DefaultSelectProps & {
   options?: OptionProps[]
 }
 
-export function Select({ onChange, options = [], ...props }: SelectProps) {
+export function Select({
+  className,
+  onChange,
+  options = [],
+  ...props
+}: SelectProps) {
   const renderedOptions = (options ?? []).map((option) => (
     <option key={option.value} value={option.value}>
       {option.label}
@@ -28,7 +35,11 @@ export function Select({ onChange, options = [], ...props }: SelectProps) {
   }
 
   return (
-    <select onChange={handleChange} {...props}>
+    <select
+      onChange={handleChange}
+      className={classNames(styles.main, className)}
+      {...props}
+    >
       {renderedOptions}
     </select>
   )

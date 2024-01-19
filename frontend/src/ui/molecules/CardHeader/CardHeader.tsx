@@ -1,4 +1,5 @@
 'use client'
+import { IconButton } from '@/ui/atoms/IconButton'
 import { HeartIcon } from '@/ui/icons/HeartIcon/HeartIcon'
 import classNames from 'classnames'
 import Image, { ImageProps } from 'next/image'
@@ -11,7 +12,7 @@ export type CardHeaderProps = {
   name: string
   description?: string
   favorite: boolean
-  onFavoriteChange?: (e: MouseEvent) => void
+  onFavoriteChange: (e: MouseEvent) => void
   flat: boolean
 }
 
@@ -25,21 +26,25 @@ export function CardHeader({
 }: CardHeaderProps) {
   return (
     <Stack className={classNames(styles.main, flat && styles.flat)} column>
-      <Image {...imageProps} className={classNames(flat && styles.hidden)} />
+      <Image
+        {...imageProps}
+        className={classNames(styles.image, flat && styles.hidden)}
+      />
       <Stack className={styles.container}>
         <Stack
           column
           className={classNames(styles.detail, flat && styles.flat)}
         >
-          <Text>{name}</Text>
+          <Text variant="title">{name}</Text>
           {description && <Text>{description}</Text>}
         </Stack>
-        <div
+        <IconButton
           className={classNames(styles.icon, flat && styles.flat)}
           onClick={onFavoriteChange}
-        >
-          <HeartIcon weight={favorite ? 'fill' : 'regular'} color="red" />
-        </div>
+          icon={
+            <HeartIcon weight={favorite ? 'fill' : 'regular'} color="red" />
+          }
+        />
       </Stack>
     </Stack>
   )

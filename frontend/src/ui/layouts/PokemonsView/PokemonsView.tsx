@@ -26,6 +26,7 @@ export function PokemonsView({
     const { id, name } = pokemon
     const Header = (
       <PokemonCardHeader
+        key={id}
         pokemon={pokemon}
         imageProps={{
           alt: `Pokemon ${name}`,

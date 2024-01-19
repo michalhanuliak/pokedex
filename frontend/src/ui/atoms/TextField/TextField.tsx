@@ -1,19 +1,27 @@
-import { HTMLAttributes } from 'react'
+import classNames from 'classnames'
+import { ChangeEvent, InputHTMLAttributes } from 'react'
+import styles from './styles.module.scss'
 
 export type DefaultTextFieldProps = Omit<
-  HTMLAttributes<HTMLInputElement>,
+  InputHTMLAttributes<HTMLInputElement>,
   'onChange'
 >
 
 export type TextFieldProps = DefaultTextFieldProps & {
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: string) => void
+  onChange?: (event: ChangeEvent<HTMLInputElement>, value: string) => void
 }
 
-export function TextField({ onChange, ...props }: TextFieldProps) {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+export function TextField({ className, onChange, ...props }: TextFieldProps) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     onChange?.(e, value)
   }
 
-  return <input onChange={handleChange} {...props} />
+  return (
+    <input
+      onChange={handleChange}
+      className={classNames(styles.main, className)}
+      {...props}
+    />
+  )
 }

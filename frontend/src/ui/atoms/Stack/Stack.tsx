@@ -17,9 +17,9 @@ export function Stack({
   return (
     <div
       className={classNames(
-        styles.main,
-        column ? styles.column : '',
         className,
+        column ? styles.column : '',
+        styles.main,
       )}
       {...props}
     >
