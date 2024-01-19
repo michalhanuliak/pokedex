@@ -4,6 +4,7 @@
   padding: 1rem 2rem;
 }
 
+.error,
 .notFound {
   display: flex;
   flex-direction: column;
@@ -16,6 +17,7 @@
   font-size: 2rem;
 }
 
+.errorButton,
 .notFoundButton {
   color: #3f72af;
 }

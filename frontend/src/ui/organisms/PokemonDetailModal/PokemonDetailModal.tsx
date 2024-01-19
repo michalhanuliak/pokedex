@@ -26,6 +26,8 @@ const customStyles = {
   },
 }
 
+Modal.setAppElement('#pokemons')
+
 export function PokemonDetailModal({
   pokemon,
   isOpen,
@@ -37,22 +39,20 @@ export function PokemonDetailModal({
   }
 
   return (
-    <div>
-      <Modal isOpen={isOpen} onRequestClose={handleClose} style={customStyles}>
-        <Stack className={styles.main} column>
-          <Stack className={styles.header}>
-            <Text variant="title" className={styles.title}>
-              {pokemon.name}
-            </Text>
-            <IconButton
-              icon={<XIcon />}
-              onClick={handleClose}
-              aria-label="Close modal"
-            />
-          </Stack>
-          <PokemonStats pokemon={pokemon} />
+    <Modal isOpen={isOpen} onRequestClose={handleClose} style={customStyles}>
+      <Stack className={styles.main} column>
+        <Stack className={styles.header}>
+          <Text variant="title" className={styles.title}>
+            {pokemon.name}
+          </Text>
+          <IconButton
+            icon={<XIcon />}
+            onClick={handleClose}
+            aria-label="Close modal"
+          />
         </Stack>
-      </Modal>
-    </div>
+        <PokemonStats pokemon={pokemon} />
+      </Stack>
+    </Modal>
   )
 }
