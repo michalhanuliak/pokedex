@@ -1,5 +1,7 @@
 import { IconProps, X } from '@phosphor-icons/react'
 
-export function XIcon(props: IconProps) {
+export type XIconProps = IconProps
+
+export function XIcon(props: XIconProps) {
   return <X size={32} {...props} />
 }

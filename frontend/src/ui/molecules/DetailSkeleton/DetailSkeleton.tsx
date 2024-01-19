@@ -1,6 +1,6 @@
-import { Stack, Text } from '@/ui/atoms'
 import classNames from 'classnames'
 import { useState } from 'react'
+import { Stack, Text } from '../../atoms'
 import styles from './styles.module.scss'
 
 export type DetailSkeletonProps = {

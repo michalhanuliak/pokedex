@@ -1,6 +1,6 @@
-import { Text } from '@/ui/atoms'
 import classNames from 'classnames'
 import Link from 'next/link'
+import { Text } from '../../atoms'
 import styles from './styles.module.scss'
 
 export type TabProps = {

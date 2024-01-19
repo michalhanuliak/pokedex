@@ -1,8 +1,8 @@
-import { SquaresFourIcon } from './SquaresFourIcon'
+import { ArrowLeftIcon } from './ArrowLeftIcon'
 
 const meta = {
-  title: 'Icon/SquaresFourIcon',
-  component: SquaresFourIcon,
+  title: 'Icon/ArrowLeftIcon',
+  component: ArrowLeftIcon,
 }
 export default meta
 

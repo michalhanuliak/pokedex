@@ -1,3 +1,7 @@
+export * from './ArrowLeftIcon'
+export * from './EyeIcon'
 export * from './HeartIcon'
 export * from './ListIcon'
+export * from './SpeakerSimpleHighIcon'
 export * from './SquaresFourIcon'
+export * from './XIcon'

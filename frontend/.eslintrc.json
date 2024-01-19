@@ -5,16 +5,22 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:storybook/recommended"
   ],
-  "ignorePatterns": ["**/generated/**.ts"],
+  "ignorePatterns": [
+    "**/generated/**.ts"
+  ],
   "rules": {
     "no-console": 1,
     "jsx-a11y/alt-text": 0
   },
   "settings": {
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
     },
     "import/resolver": {
       "typescript": {

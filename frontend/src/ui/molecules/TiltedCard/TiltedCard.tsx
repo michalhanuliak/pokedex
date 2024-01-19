@@ -1,8 +1,8 @@
 'use client'
-import { Card } from '@/ui/molecules'
 import Link from 'next/link'
 import { PropsWithChildren } from 'react'
 import Tilt from 'react-parallax-tilt'
+import { Card } from '../Card'
 
 export type TiltedCardProps = PropsWithChildren<{
   href: string

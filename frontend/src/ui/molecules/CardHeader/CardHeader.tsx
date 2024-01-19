@@ -1,11 +1,9 @@
 'use client'
-import { IconButton } from '@/ui/atoms/IconButton'
-import { EyeIcon } from '@/ui/icons/EyeIcon/EyeIcon'
-import { HeartIcon } from '@/ui/icons/HeartIcon/HeartIcon'
 import classNames from 'classnames'
 import Image, { ImageProps } from 'next/image'
 import { MouseEvent } from 'react'
-import { Stack, Text } from '../../atoms'
+import { IconButton, Stack, Text } from '../../atoms'
+import { EyeIcon, HeartIcon } from '../../icons'
 import styles from './styles.module.scss'
 
 export type CardHeaderProps = {

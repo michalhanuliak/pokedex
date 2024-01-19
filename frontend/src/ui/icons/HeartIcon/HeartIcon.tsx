@@ -1,5 +1,7 @@
 import { Heart, IconProps } from '@phosphor-icons/react'
 
-export function HeartIcon(props: IconProps) {
+export type HeartIconProps = IconProps
+
+export function HeartIcon(props: HeartIconProps) {
   return <Heart size={32} {...props} />
 }

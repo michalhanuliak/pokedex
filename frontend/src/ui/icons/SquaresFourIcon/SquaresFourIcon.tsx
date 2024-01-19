@@ -1,5 +1,7 @@
 import { IconProps, SquaresFour } from '@phosphor-icons/react'
 
-export function SquaresFourIcon(props: IconProps) {
+export type SquaresFourIconProps = IconProps
+
+export function SquaresFourIcon(props: SquaresFourIconProps) {
   return <SquaresFour size={32} {...props} />
 }

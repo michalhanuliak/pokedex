@@ -1,8 +1,8 @@
-import { SquaresFourIcon } from './SquaresFourIcon'
+import { XIcon } from './XIcon'
 
 const meta = {
-  title: 'Icon/SquaresFourIcon',
-  component: SquaresFourIcon,
+  title: 'Icon/XIcon',
+  component: XIcon,
 }
 export default meta
 
