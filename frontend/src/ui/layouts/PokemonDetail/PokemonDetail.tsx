@@ -33,6 +33,7 @@ export function PokemonDetail({ name }: PokemonDetailProps) {
         className={styles.backButton}
         onClick={() => router.back()}
         icon={<ArrowLeftIcon />}
+        aria-label="Back"
       />
       <Stack className={styles.imageContainer}>
         <IconButton

@@ -25,7 +25,7 @@ export function PokemonCardHeader({
 }: PokemonCardHeaderProps) {
   const { id, name, image, isFavorite, types } = pokemon
 
-  const { category, filters, view } = useViewSettingsContext()
+  const { filters, view } = useViewSettingsContext()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { handleFavoritePokemon } = useFavoritePokemon(filters)

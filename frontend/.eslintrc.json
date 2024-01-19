@@ -7,8 +7,20 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
   ],
+  "ignorePatterns": ["**/generated/**.ts"],
   "rules": {
-    "unused-imports/no-unused-imports-ts": "error",
-    "no-console": "warn"
+    "no-console": 1,
+    "jsx-a11y/alt-text": 0
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      }
+    }
   }
 }

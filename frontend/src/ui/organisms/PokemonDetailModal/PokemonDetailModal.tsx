@@ -44,7 +44,11 @@ export function PokemonDetailModal({
             <Text variant="title" className={styles.title}>
               {pokemon.name}
             </Text>
-            <IconButton icon={<XIcon />} onClick={handleClose} />
+            <IconButton
+              icon={<XIcon />}
+              onClick={handleClose}
+              aria-label="Close modal"
+            />
           </Stack>
           <PokemonStats pokemon={pokemon} />
         </Stack>

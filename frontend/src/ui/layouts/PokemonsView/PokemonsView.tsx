@@ -48,7 +48,7 @@ export function PokemonsView({ initPokemons = [] }: PokemonsViewProps) {
           </TiltedCard>
         )
       }),
-    [pokemons, view],
+    [initPokemons, pokemons, view],
   )
 
   return (

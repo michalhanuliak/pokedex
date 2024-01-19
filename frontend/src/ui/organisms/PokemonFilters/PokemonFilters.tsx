@@ -34,12 +34,14 @@ export function PokemonFilters({ initTypes = [] }: PokemonFiltersProps) {
           onChange={(_, value) => handleSearchChange(value)}
           placeholder="Search"
           value={query}
+          aria-label="Search"
         />
         <Select
           options={options.length === 0 ? initTypes : options}
           onChange={(_, value) => handleTypeChange(value)}
           value={filters.type}
           loading={isLoading}
+          aria-label="Type"
         />
       </Stack>
       <Stack>
@@ -47,12 +49,14 @@ export function PokemonFilters({ initTypes = [] }: PokemonFiltersProps) {
           onClick={() => handleViewChange(View.LIST)}
           icon={<ListIcon color="#112D4E" />}
           active={view === View.LIST}
+          aria-label="List view"
         />
 
         <IconButton
           onClick={() => handleViewChange(View.GRID)}
           icon={<SquaresFourIcon color="#112D4E" />}
           active={view === View.GRID}
+          aria-label="Grid view"
         />
       </Stack>
     </Stack>

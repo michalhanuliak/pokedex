@@ -52,6 +52,7 @@ export function CardHeader({
                 onModalToggle()
               }}
               className={styles.eye}
+              aria-label="View details"
             />
           )}
           <IconButton

@@ -1,11 +1,6 @@
 import { PartialPokemonMutation } from '@/domain'
-import {
-  MutationHookOptions,
-  QueryHookOptions,
-  gql,
-  useMutation,
-  useQuery,
-} from '@apollo/client'
+import type { MutationHookOptions, QueryHookOptions } from '@apollo/client'
+import { gql, useMutation, useQuery } from '@apollo/client'
 import {
   MutationFavoritePokemonArgs,
   MutationUnFavoritePokemonArgs,

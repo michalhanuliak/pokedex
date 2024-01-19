@@ -1,5 +1,6 @@
 import { useGetPokemoTypesQuery } from '@/infrastructure/queries/usePokemonQuery'
 import { getPokemonTypeOptions } from '@/utils'
+import { enqueueSnackbar } from 'notistack'
 import { useMemo } from 'react'
 
 export function usePokemonTypeOptions() {
@@ -7,12 +8,12 @@ export function usePokemonTypeOptions() {
     variables: {
       query: {},
     },
-    onError: (error) => {
-      console.error(error)
+    onError: () => {
+      enqueueSnackbar('Failed to fetch options', { variant: 'error' })
     },
   })
 
-  const options = useMemo(() => getPokemonTypeOptions(data), [data, isLoading])
+  const options = useMemo(() => getPokemonTypeOptions(data), [data])
 
   return { options, isLoading }
 }

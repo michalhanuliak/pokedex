@@ -1,4 +1,5 @@
 import { PokemonDetail } from '@/ui/layouts/PokemonDetail/PokemonDetail'
+import { Metadata } from 'next'
 import styles from './styles.module.scss'
 
 type Props = {
@@ -13,4 +14,10 @@ export default function Detail({ params }: Props) {
       <PokemonDetail name={params.name} />
     </main>
   )
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  return {
+    title: `Pokedex - ${params.name}`,
+  }
 }

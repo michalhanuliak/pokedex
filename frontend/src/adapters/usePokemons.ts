@@ -32,7 +32,7 @@ export function useGetAllPokemons(category: Category, filters: Filters) {
 
   const hasNextPage = useMemo(
     () => (data?.pokemons.count ?? NaN) > currentPage * DEFAULT_PAGE_SIZE,
-    [data],
+    [currentPage, data?.pokemons.count],
   )
 
   const loadMore = async () => {
@@ -194,7 +194,7 @@ export function useGetPokemonByName(name: string) {
     variables: {
       name,
     },
-    onError: (error) => {
+    onError: () => {
       enqueueSnackbar(`Failed to get pokemon ${name}`, {
         variant: 'error',
       })
