@@ -1,7 +1,7 @@
 'use client'
 import { usePokemonTypeOptions } from '@/adapters/useOptions'
-import { Filters, View } from '@/domain'
-import { useFilters } from '@/hooks/useFilters'
+import { useViewSettingsContext } from '@/contexts/useViewSettingsContext'
+import { View } from '@/domain'
 import { Stack } from '@/ui/atoms'
 import { IconButton } from '@/ui/atoms/IconButton'
 import { Select } from '@/ui/atoms/Select'
@@ -10,17 +10,22 @@ import { ListIcon, SquaresFourIcon } from '@/ui/icons'
 import styles from './styles.module.scss'
 
 export type PokemonFiltersProps = {
-  filters: Filters
-  listView?: boolean
+  initTypes?: {
+    label: string
+    value: string
+  }[]
 }
-export function PokemonFilters({
-  filters,
-  listView = false,
-}: PokemonFiltersProps) {
-  const { search, handleTypeChange, handleSearchChange, handleViewChange } =
-    useFilters(filters)
 
-  const { options } = usePokemonTypeOptions()
+export function PokemonFilters({ initTypes = [] }: PokemonFiltersProps) {
+  const { options, isLoading } = usePokemonTypeOptions()
+  const {
+    view,
+    filters,
+    query,
+    handleSearchChange,
+    handleTypeChange,
+    handleViewChange,
+  } = useViewSettingsContext()
 
   return (
     <Stack className={styles.main}>
@@ -28,25 +33,26 @@ export function PokemonFilters({
         <TextField
           onChange={(_, value) => handleSearchChange(value)}
           placeholder="Search"
-          value={search}
+          value={query}
         />
         <Select
-          options={options}
+          options={options.length === 0 ? initTypes : options}
           onChange={(_, value) => handleTypeChange(value)}
           value={filters.type}
+          loading={isLoading}
         />
       </Stack>
       <Stack>
         <IconButton
           onClick={() => handleViewChange(View.LIST)}
           icon={<ListIcon color="#112D4E" />}
-          active={listView}
+          active={view === View.LIST}
         />
 
         <IconButton
           onClick={() => handleViewChange(View.GRID)}
           icon={<SquaresFourIcon color="#112D4E" />}
-          active={!listView}
+          active={view === View.GRID}
         />
       </Stack>
     </Stack>

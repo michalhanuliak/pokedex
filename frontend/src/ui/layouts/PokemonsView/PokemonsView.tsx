@@ -1,58 +1,72 @@
 'use client'
 import { useGetAllPokemons } from '@/adapters/usePokemons'
-import { Category, Filters } from '@/domain'
+import { useViewSettingsContext } from '@/contexts/useViewSettingsContext'
+import { Pokemon, View } from '@/domain'
+import { Text } from '@/ui/atoms'
 import { TiltedCard } from '@/ui/molecules/TiltedCard'
 import { PokemonCardHeader } from '@/ui/organisms/PokemonCardHeader'
 import classNames from 'classnames'
+import { SnackbarProvider } from 'notistack'
+import { useMemo } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import styles from './styles.module.scss'
 
 type PokemonsViewProps = {
-  activeCategory: Category
-  filters: Filters
-  listView: boolean
+  initPokemons?: Pokemon[]
 }
 
-export function PokemonsView({
-  activeCategory,
-  filters,
-  listView,
-}: PokemonsViewProps) {
-  const { pokemons, isLoading, loadNextPage, hasNextPage } = useGetAllPokemons(
-    activeCategory,
+export function PokemonsView({ initPokemons = [] }: PokemonsViewProps) {
+  const { view, filters, category } = useViewSettingsContext()
+  const { pokemons, loadNextPage, hasNextPage, isLoading } = useGetAllPokemons(
+    category,
     filters,
   )
 
-  const renderedPokemons = pokemons.map((pokemon) => {
-    const { id, name } = pokemon
-    const Header = (
-      <PokemonCardHeader
-        key={id}
-        pokemon={pokemon}
-        imageProps={{
-          alt: `Pokemon ${name}`,
-          width: 300,
-          height: 300,
-        }}
-        flat={listView}
-        filters={filters}
-        category={activeCategory}
-      />
-    )
-    return listView ? (
-      Header
-    ) : (
-      <TiltedCard key={id} href={`/${name.toLowerCase().replace(' ', '-')}`}>
-        {Header}
-      </TiltedCard>
-    )
-  })
+  const renderedPokemons = useMemo(
+    () =>
+      (pokemons ?? initPokemons).map((pokemon) => {
+        const { id, name } = pokemon
+        const Header = (
+          <PokemonCardHeader
+            key={id}
+            pokemon={pokemon}
+            imageProps={{
+              alt: `Pokemon ${name}`,
+              width: 300,
+              height: 300,
+            }}
+          />
+        )
+        return view === View.LIST ? (
+          Header
+        ) : (
+          <TiltedCard
+            key={id}
+            href={`/${name.toLowerCase().replace(' ', '-')}`}
+          >
+            {Header}
+          </TiltedCard>
+        )
+      }),
+    [pokemons, view],
+  )
 
   return (
-    <InfiniteScroll pageStart={0} loadMore={loadNextPage} hasMore={hasNextPage}>
-      <div className={classNames(styles.main, listView && styles.list)}>
-        {renderedPokemons}
-      </div>
-    </InfiniteScroll>
+    <SnackbarProvider autoHideDuration={2000}>
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={loadNextPage}
+        hasMore={hasNextPage}
+      >
+        <div
+          className={classNames(styles.main, view === View.LIST && styles.list)}
+        >
+          {pokemons?.length === 0 && !isLoading && (
+            <Text>No pokemons found</Text>
+          )}
+          {renderedPokemons}
+        </div>
+      </InfiniteScroll>
+    </SnackbarProvider>
   )
 }

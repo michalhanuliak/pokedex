@@ -1,3 +1,4 @@
+import { DEFAULT_PAGE_SIZE } from '@/constants'
 import { Category, Filters } from '@/domain'
 import { Query } from '@/infrastructure/generated/types'
 import {
@@ -7,24 +8,9 @@ import {
   useGetPokemonsQuery,
   useUnFavoritePokemonMutation,
 } from '@/infrastructure/queries/usePokemonQuery'
-import { createAudioUrl } from '@/utils'
-import { useApolloClient } from '@apollo/client'
+import { createAudioUrl, createVariables } from '@/utils'
+import { enqueueSnackbar } from 'notistack'
 import { useLayoutEffect, useMemo, useState } from 'react'
-
-const DEFAULT_PAGE_SIZE = 20
-
-function createVariables(category?: Category, filters?: Filters) {
-  return {
-    query: {
-      filter: {
-        isFavorite: category === Category.FAVORITE ? true : undefined,
-        type: filters?.type,
-      },
-      search: filters?.query,
-      limit: DEFAULT_PAGE_SIZE,
-    },
-  }
-}
 
 export function useGetAllPokemons(category: Category, filters: Filters) {
   const [currentPage, setCurrentPage] = useState(1)
@@ -37,8 +23,10 @@ export function useGetAllPokemons(category: Category, filters: Filters) {
     fetchMore,
   } = useGetPokemonsQuery({
     variables,
-    onError: (error) => {
-      console.error(error)
+    onError: () => {
+      enqueueSnackbar('Failed to fetch pokemons', {
+        variant: 'error',
+      })
     },
   })
 
@@ -70,7 +58,7 @@ export function useGetAllPokemons(category: Category, filters: Filters) {
     setCurrentPage((prev) => prev + 1)
   }
 
-  const pokemons = useMemo(() => data?.pokemons.edges ?? [], [data])
+  const pokemons = useMemo(() => data?.pokemons.edges, [data])
 
   useLayoutEffect(() => {
     setCurrentPage(1)
@@ -85,12 +73,17 @@ export function useGetAllPokemons(category: Category, filters: Filters) {
   }
 }
 
-export function useFavoritePokemon(category?: Category, filters?: Filters) {
-  const apolloClient = useApolloClient()
-
+export function useFavoritePokemon(filters?: Filters, category?: Category) {
   const [favoritePokemon, { loading: isLoading }] = useFavoritePokemonMutation({
-    onError: (error) => {
-      console.error(error)
+    onError: () => {
+      enqueueSnackbar('Failed to add pokemon to favorites', {
+        variant: 'error',
+      })
+    },
+    onCompleted: () => {
+      enqueueSnackbar('Pokemon added to favorites', {
+        variant: 'success',
+      })
     },
   })
 
@@ -99,17 +92,20 @@ export function useFavoritePokemon(category?: Category, filters?: Filters) {
 
     favoritePokemon({
       variables: { id },
-      optimisticResponse: (variables) => {
+      optimisticResponse: () => {
         return {
           favoritePokemon: {
             __typename: 'Pokemon',
-            id: variables.id,
+            id: new Date().toISOString(),
             isFavorite: true,
           },
         }
       },
       update: (cache, { data }) => {
-        const variables = createVariables(Category.FAVORITE, filters)
+        const variables = createVariables(
+          category ?? Category.FAVORITE,
+          filters,
+        )
 
         cache.updateQuery<Query>(
           { query: GET_POKEMONS, variables },
@@ -138,11 +134,18 @@ export function useFavoritePokemon(category?: Category, filters?: Filters) {
   }
 }
 
-export function useUnFavoritePokemon(category?: Category, filters?: Filters) {
+export function useUnFavoritePokemon(filters?: Filters, category?: Category) {
   const [unFavoritePokemon, { loading: isLoading }] =
     useUnFavoritePokemonMutation({
-      onError: (error) => {
-        console.error(error)
+      onError: () => {
+        enqueueSnackbar('Failed to remove pokemon from favorites', {
+          variant: 'error',
+        })
+      },
+      onCompleted: () => {
+        enqueueSnackbar('Pokemon removed from favorites', {
+          variant: 'success',
+        })
       },
     })
 
@@ -152,7 +155,10 @@ export function useUnFavoritePokemon(category?: Category, filters?: Filters) {
     unFavoritePokemon({
       variables: { id },
       update: (cache) => {
-        const variables = createVariables(category, filters)
+        const variables = createVariables(
+          category ?? Category.FAVORITE,
+          filters,
+        )
 
         cache.updateQuery<Query, typeof variables>(
           { query: GET_POKEMONS, variables },
@@ -189,7 +195,9 @@ export function useGetPokemonByName(name: string) {
       name,
     },
     onError: (error) => {
-      console.error(error)
+      enqueueSnackbar(`Failed to get pokemon ${name}`, {
+        variant: 'error',
+      })
     },
   })
 
@@ -197,13 +205,19 @@ export function useGetPokemonByName(name: string) {
 
   const getSoundUrl = async () => {
     if (!pokemon) return
-    const audio = await fetch(pokemon.sound, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-    })
+    try {
+      const audio = await fetch(pokemon.sound, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      })
 
-    return createAudioUrl(await audio.arrayBuffer())
+      return createAudioUrl(await audio.arrayBuffer())
+    } catch (error) {
+      enqueueSnackbar('Failed to fetch pokemon sound', {
+        variant: 'error',
+      })
+    }
   }
 
   const handlePlaySound = async () => {

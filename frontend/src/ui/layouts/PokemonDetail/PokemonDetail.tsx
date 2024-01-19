@@ -52,7 +52,7 @@ export function PokemonDetail({ name }: PokemonDetailProps) {
       </Stack>
 
       <Stack column>
-        <PokemonCardHeader pokemon={pokemon} flat />
+        <PokemonCardHeader pokemon={pokemon} hideModalButton />
         <PokemonStats pokemon={pokemon} />
       </Stack>
       <PokemonEvolutions evolutions={pokemon.evolutions} />

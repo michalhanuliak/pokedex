@@ -10,11 +10,11 @@ export function useFilters(filters: Filters) {
   const pathname = usePathname()
   const { replace } = useRouter()
 
-  const [search, setSearch] = useState(filters.query ?? '')
+  const [query, setQuery] = useState(filters.query ?? '')
 
   const handleTypeChange = (type: string) => {
     const params = new URLSearchParams(searchParams)
-    if (type === 'all') {
+    if (type === '') {
       params.delete('type')
     } else {
       params.set('type', type)
@@ -46,16 +46,22 @@ export function useFilters(filters: Filters) {
   }
 
   const handleSearchChange = (query: string) => {
-    setSearch(query)
+    setQuery(query)
   }
 
   useDebounce(
     () => {
-      handleSearch(search)
+      handleSearch(query)
     },
     300,
-    [search],
+    [query],
   )
 
-  return { search, handleTypeChange, handleSearchChange, handleViewChange }
+  return {
+    filters,
+    query,
+    handleTypeChange,
+    handleSearchChange,
+    handleViewChange,
+  }
 }

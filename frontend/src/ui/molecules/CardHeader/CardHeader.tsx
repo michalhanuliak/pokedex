@@ -1,5 +1,6 @@
 'use client'
 import { IconButton } from '@/ui/atoms/IconButton'
+import { EyeIcon } from '@/ui/icons/EyeIcon/EyeIcon'
 import { HeartIcon } from '@/ui/icons/HeartIcon/HeartIcon'
 import classNames from 'classnames'
 import Image, { ImageProps } from 'next/image'
@@ -11,6 +12,7 @@ export type CardHeaderProps = {
   name: string
   favorite: boolean
   onFavoriteChange: (e: MouseEvent) => void
+  onModalToggle?: () => void
   description?: string
   imageProps?: ImageProps
   flat?: boolean
@@ -21,6 +23,7 @@ export function CardHeader({
   name,
   favorite,
   onFavoriteChange,
+  onModalToggle,
   description,
   flat = false,
 }: CardHeaderProps) {
@@ -40,13 +43,25 @@ export function CardHeader({
           <Text variant="title">{name}</Text>
           {description && <Text>{description}</Text>}
         </Stack>
-        <IconButton
-          className={classNames(styles.icon, flat && styles.flat)}
-          onClick={onFavoriteChange}
-          icon={
-            <HeartIcon weight={favorite ? 'fill' : 'regular'} color="red" />
-          }
-        />
+        <Stack>
+          {onModalToggle && (
+            <IconButton
+              icon={<EyeIcon weight="fill" />}
+              onClick={(event) => {
+                event.preventDefault()
+                onModalToggle()
+              }}
+              className={styles.eye}
+            />
+          )}
+          <IconButton
+            className={classNames(styles.icon, flat && styles.flat)}
+            onClick={onFavoriteChange}
+            icon={
+              <HeartIcon weight={favorite ? 'fill' : 'regular'} color="red" />
+            }
+          />
+        </Stack>
       </Stack>
     </Stack>
   )

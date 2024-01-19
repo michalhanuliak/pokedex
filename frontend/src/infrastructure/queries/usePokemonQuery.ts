@@ -21,13 +21,6 @@ const POKEMON_FRAGMENT = gql`
     types
     image
     isFavorite
-  }
-`
-
-const POKEMON_DETAIL_FRAGMENT = gql`
-  ${POKEMON_FRAGMENT}
-  fragment PokemonDetail on Pokemon {
-    ...Pokemon
     sound
     weight {
       maximum
@@ -118,10 +111,10 @@ export const useUnFavoritePokemonMutation = <
 }
 
 export const GET_POKEMON = gql`
-  ${POKEMON_DETAIL_FRAGMENT}
+  ${POKEMON_FRAGMENT}
   query GetPokemonByName($name: String!) {
     pokemonByName(name: $name) {
-      ...PokemonDetail
+      ...Pokemon
     }
   }
 `

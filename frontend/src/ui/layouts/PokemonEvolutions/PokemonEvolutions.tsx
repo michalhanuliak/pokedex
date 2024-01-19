@@ -20,6 +20,7 @@ export function PokemonEvolutions({ evolutions }: PokemonEvolutionsProps) {
             height: 300,
           }}
           hideTypes
+          hideModalButton
         />
       </TiltedCard>
     )

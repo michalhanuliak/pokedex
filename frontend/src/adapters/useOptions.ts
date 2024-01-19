@@ -1,4 +1,5 @@
 import { useGetPokemoTypesQuery } from '@/infrastructure/queries/usePokemonQuery'
+import { getPokemonTypeOptions } from '@/utils'
 import { useMemo } from 'react'
 
 export function usePokemonTypeOptions() {
@@ -11,16 +12,7 @@ export function usePokemonTypeOptions() {
     },
   })
 
-  const options = useMemo(() => {
-    if (!data) return []
-
-    const allTypes = data.pokemonTypes
-    const options = allTypes.map((type) => ({
-      label: type,
-      value: type.toLocaleLowerCase(),
-    }))
-    return [{ label: 'All', value: 'all' }, ...options]
-  }, [data, isLoading])
+  const options = useMemo(() => getPokemonTypeOptions(data), [data, isLoading])
 
   return { options, isLoading }
 }
