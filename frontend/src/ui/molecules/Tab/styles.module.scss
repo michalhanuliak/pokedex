@@ -1,0 +1,12 @@
+.main {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  border: 0.1rem solid gray;
+  height: 3rem;
+}
+
+.active {
+  background: gray;
+}

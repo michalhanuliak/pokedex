@@ -16,7 +16,10 @@
     "graphql": "^16.8.1",
     "next": "14.0.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-infinite-scroller": "^1.2.6",
+    "react-parallax-tilt": "^1.7.186",
+    "react-window-infinite-loader": "^1.0.9"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.0",
@@ -27,6 +30,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-infinite-scroller": "^1.2.5",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "eslint-plugin-import": "^2.29.1",
