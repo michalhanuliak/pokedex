@@ -1,6 +1,6 @@
-import { Category, Filters } from '@/domain'
+import { Category, Filters, View } from '@/domain'
 import { Stack } from '@/ui/atoms'
-import { PokemonGrid } from '@/ui/layouts/PokemonGrid'
+import { PokemonsView } from '@/ui/layouts/PokemonsView'
 import { PokemonTabs } from '@/ui/organisms'
 import { PokemonFilters } from '@/ui/organisms/PokemonFilters'
 
@@ -9,11 +9,12 @@ type Props = {
     category: Category
     query: string
     type: string
+    view: View
   }
 }
 
 export default function Home({ searchParams }: Props) {
-  const { category, query, type } = searchParams
+  const { category, query, type, view } = searchParams
 
   const filters: Filters = {
     query,
@@ -25,7 +26,11 @@ export default function Home({ searchParams }: Props) {
       <Stack column>
         <PokemonFilters filters={filters} />
         <PokemonTabs activeCategory={category} />
-        <PokemonGrid activeCategory={category} filters={filters} />
+        <PokemonsView
+          activeCategory={category}
+          filters={filters}
+          listView={view === View.LIST}
+        />
       </Stack>
     </main>
   )

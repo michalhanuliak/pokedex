@@ -1,8 +1,14 @@
 .main {
   justify-content: center;
   align-items: center;
+  &.flat {
+    flex-direction: row;
+  }
 }
 
+.hidden {
+  display: none;
+}
 .container {
   width: 100%;
   background: rgba(0, 0, 0, 0.2);
@@ -10,10 +16,17 @@
 
 .detail {
   flex: 3;
+  &.flat {
+    flex: 90;
+    flex-direction: row;
+  }
 }
 
 .icon {
   flex: 1;
   align-items: center;
   justify-content: center;
+  &.flat {
+    flex: 10;
+  }
 }

@@ -11,6 +11,11 @@ export type Filters = {
 }
 
 export enum Category {
-  ALL = 'ALL',
-  FAVORITE = 'FAVORITE',
+  ALL = 'all',
+  FAVORITE = 'favorite',
+}
+
+export enum View {
+  GRID = 'grid',
+  LIST = 'list',
 }

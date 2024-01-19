@@ -9,11 +9,13 @@ export type PokemonCardHeaderProps = {
   pokemon: Pokemon
   imageProps: Omit<CardHeaderProps['imageProps'], 'src'>
   hideTypes?: boolean
+  flat?: boolean
 }
 
 export function PokemonCardHeader({
   pokemon: { id, name, image, isFavorite, types },
   imageProps,
+  flat = false,
   hideTypes = false,
 }: PokemonCardHeaderProps) {
   const { handleFavoritePokemon, isLoading: isFavouriteMutating } =
@@ -30,6 +32,7 @@ export function PokemonCardHeader({
         ...imageProps,
         src: image,
       }}
+      flat={flat}
       name={name}
       favorite={isFavorite}
       onFavoriteChange={() => onFavoriteChange(id)}

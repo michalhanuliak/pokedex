@@ -1,22 +1,12 @@
 'use client'
 
-import { Filters } from '@/domain'
+import { View } from '@/domain'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
 
-const EMPTY_FILTERS: Filters = {
-  query: '',
-  type: '',
-}
-
-export function useFilters(defaultFilters: Filters) {
+export function useFilters() {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
-
-  const [filters, setFilters] = useState<Filters>(
-    defaultFilters ?? EMPTY_FILTERS,
-  )
 
   const handleTypeChange = (type: string) => {
     const params = new URLSearchParams(searchParams)
@@ -27,7 +17,6 @@ export function useFilters(defaultFilters: Filters) {
     }
 
     replace(`${pathname}?${params.toString()}`)
-    setFilters((prev) => ({ ...prev, type }))
   }
 
   const handleSearch = (query: string) => {
@@ -39,8 +28,18 @@ export function useFilters(defaultFilters: Filters) {
     }
 
     replace(`${pathname}?${params.toString()}`)
-    setFilters((prev) => ({ ...prev, query }))
   }
 
-  return { onTypeChange: handleTypeChange, onSearch: handleSearch, filters }
+  const handleViewChange = (view: View) => {
+    const params = new URLSearchParams(searchParams)
+    if (view === View.GRID) {
+      params.delete('view')
+    } else {
+      params.set('view', view)
+    }
+
+    replace(`${pathname}?${params.toString()}`)
+  }
+
+  return { handleTypeChange, handleSearch, handleViewChange }
 }
