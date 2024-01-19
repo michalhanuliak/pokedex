@@ -8,10 +8,11 @@ import {
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr'
+import { PropsWithChildren } from 'react'
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: 'http://localhost:4000/graphql',
+    uri: process.env['NEXT_PUBLIC_GRAPHQL_URL'],
     fetchOptions: { cache: 'no-store' },
   })
 
@@ -29,7 +30,7 @@ function makeClient() {
   })
 }
 
-export function ApolloWrapper({ children }: React.PropsWithChildren) {
+export function ApolloWrapper({ children }: PropsWithChildren) {
   return (
     <ApolloNextAppProvider makeClient={makeClient}>
       {children}

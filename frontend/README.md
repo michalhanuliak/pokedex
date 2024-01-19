@@ -20,10 +20,14 @@ npm install // or yarn install
 
 ### Running the Application
 
+Copy enviroment variables
+
+```bash
+cp .env.local.example .env.local
+```
+
 Start the development server:
 npm run dev // or yarn dev
-
-The application will be available at http://localhost:3000.
 
 ## Documentation
 
