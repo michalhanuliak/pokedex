@@ -1,5 +1,6 @@
+'use client'
 import { classNames } from '@/lib/classNames'
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { Stack, Text } from '../../atoms'
 import styles from './styles.module.scss'
 
@@ -14,9 +15,12 @@ export function DetailSkeleton({
 }: DetailSkeletonProps) {
   const [isLoadingSlow, setIsLoadingSlow] = useState(false)
 
-  setTimeout(() => {
-    setIsLoadingSlow(true)
-  }, 500)
+  useLayoutEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsLoadingSlow(true)
+    }, 500)
+    return () => clearTimeout(timeout)
+  }, [])
 
   if (!disableThrottle && !isLoadingSlow) {
     return

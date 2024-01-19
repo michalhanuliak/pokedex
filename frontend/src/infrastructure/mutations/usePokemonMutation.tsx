@@ -3,6 +3,7 @@ import type { MutationHookOptions } from '../../lib/apollo-client'
 import { gql, useMutation } from '../../lib/apollo-client'
 import { POKEMON_FRAGMENT } from '../fragments'
 import {
+  Mutation,
   MutationFavoritePokemonArgs,
   MutationUnFavoritePokemonArgs,
 } from '../generated'
@@ -17,7 +18,7 @@ export const FAVORITE_POKEMON_MUTATION = gql`
 `
 
 export const useFavoritePokemonMutation = <
-  T extends Pick<PartialPokemonMutation, 'favoritePokemon'>,
+  T extends Pick<Mutation, 'favoritePokemon'>,
   D extends MutationFavoritePokemonArgs,
 >(
   baseOptions?: MutationHookOptions<T, D>,

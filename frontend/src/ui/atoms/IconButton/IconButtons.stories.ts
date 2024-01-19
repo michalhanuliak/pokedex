@@ -10,6 +10,7 @@ export default meta
 export const Default = {
   args: {
     icon: EyeIcon,
+    // eslint-disable-next-line no-console
     onClick: () => console.log('Button clicked'),
     hideShadow: false,
     active: false,

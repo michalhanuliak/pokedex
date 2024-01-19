@@ -1,8 +1,8 @@
 import { Pokemon } from '@/domain'
-import { Modal } from '@/lib/react-modal'
 import { IconButton, Stack, Text } from '@/ui/atoms'
 import { XIcon } from '@/ui/icons'
 import { MouseEvent } from 'react'
+import Modal from 'react-modal'
 import { PokemonStats } from '../PokemonStats'
 import styles from './styles.module.scss'
 

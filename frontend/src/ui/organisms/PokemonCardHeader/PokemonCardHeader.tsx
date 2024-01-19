@@ -1,3 +1,4 @@
+'use client'
 import { useFavoritePokemon, useUnFavoritePokemon } from '@/adapters'
 import { useViewSettingsContext } from '@/contexts'
 import { Pokemon, View } from '@/domain'
@@ -25,7 +26,7 @@ export function PokemonCardHeader({
   const { filters, view } = useViewSettingsContext()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { handleFavoritePokemon } = useFavoritePokemon(filters)
+  const { handleFavoritePokemon } = useFavoritePokemon(pokemon, filters)
   const { handleUnFavoritePokemon } = useUnFavoritePokemon(filters)
 
   function handleModalToggle() {

@@ -1,6 +1,5 @@
 import { DEFAULT_PAGE_SIZE } from '@/constants'
-import { Category, Filters } from '@/domain'
-import { Query } from '@/infrastructure/'
+import { Category, Filters, Query } from '@/domain'
 
 export async function createAudioUrl(
   arrayBuffer: ArrayBuffer,
@@ -16,7 +15,7 @@ export function createVariables(category?: Category, filters?: Filters) {
         isFavorite: category === Category.FAVORITE ? true : undefined,
         type: filters?.type,
       },
-      search: filters?.query,
+      search: filters?.query ?? '',
       limit: DEFAULT_PAGE_SIZE,
     },
   }

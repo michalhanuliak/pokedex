@@ -10,6 +10,7 @@ export default meta
 export const Default = {
   args: {
     onChange: (_: MouseEvent, value: string) =>
+      // eslint-disable-next-line no-console
       console.log(`Selected: ${value}`),
     options: [
       { label: 'Option 1', value: '1' },

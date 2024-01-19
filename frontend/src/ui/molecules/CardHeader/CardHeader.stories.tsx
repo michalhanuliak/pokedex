@@ -10,7 +10,9 @@ export const Default = {
   args: {
     name: 'Sample Name',
     favorite: false,
+    // eslint-disable-next-line no-console
     onFavoriteChange: () => console.log('Favorite changed'),
+    // eslint-disable-next-line no-console
     onModalToggle: () => console.log('Modal toggled'),
     description: 'This is a description',
     imageProps: {

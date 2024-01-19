@@ -12,7 +12,6 @@ export const Default = {
       <>
         <div>Item 1</div>
         <div>Item 2</div>
-        // Add more items as needed
       </>
     ),
     column: false,

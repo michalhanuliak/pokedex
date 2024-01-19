@@ -8,6 +8,7 @@ export default meta
 
 export const Default = {
   args: {
+    // eslint-disable-next-line no-console
     onClick: () => console.log('Card clicked'),
     children: (
       <>

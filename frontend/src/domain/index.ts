@@ -1,20 +1,12 @@
-import { Pokemon as GeneratedPokemon, Maybe } from '@/infrastructure'
+import {
+  Pokemon as GeneratedPokemon,
+  Query as GeneratedQuery,
+  Maybe,
+} from '@/infrastructure/generated'
 
-export type Pokemon = Pick<
-  GeneratedPokemon,
-  | 'id'
-  | 'name'
-  | 'types'
-  | 'image'
-  | 'isFavorite'
-  | 'maxHP'
-  | 'maxCP'
-  | 'weight'
-  | 'height'
-  | 'weaknesses'
-  | 'resistant'
-  | 'attacks'
->
+export type Pokemon = GeneratedPokemon
+
+export type Query = GeneratedQuery
 
 export type Filters = {
   query: string

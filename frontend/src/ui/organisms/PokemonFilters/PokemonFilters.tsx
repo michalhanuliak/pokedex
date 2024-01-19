@@ -2,6 +2,7 @@
 import { usePokemonTypeOptions } from '@/adapters/useOptions'
 import { useViewSettingsContext } from '@/contexts/useViewSettingsContext'
 import { View } from '@/domain'
+import { useLayoutEffect } from 'react'
 import { IconButton, Select, Stack, TextField } from '../../atoms'
 import { ListIcon, SquaresFourIcon } from '../../icons'
 import styles from './styles.module.scss'
@@ -23,6 +24,13 @@ export function PokemonFilters({ initTypes = [] }: PokemonFiltersProps) {
     handleTypeChange,
     handleViewChange,
   } = useViewSettingsContext()
+
+  // Remove filters when comming from another page
+  useLayoutEffect(() => {
+    handleSearchChange('')
+    handleTypeChange('')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Stack className={styles.main}>

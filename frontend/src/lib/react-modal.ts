@@ -1,1 +1,1 @@
-export { default as Modal } from 'react-modal'
+export { default as ReactModal } from 'react-modal'

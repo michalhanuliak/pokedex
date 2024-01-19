@@ -1,14 +1,19 @@
-import { Category, Filters } from '@/domain'
+'use client'
+import { Category, Filters, Pokemon, Query } from '@/domain'
+
 import {
-  GET_POKEMONS,
-  Query,
   useFavoritePokemonMutation,
   useUnFavoritePokemonMutation,
-} from '@/infrastructure'
+} from '@/infrastructure/mutations'
+import { GET_POKEMONS } from '@/infrastructure/queries'
 import { enqueueSnackbar } from '@/lib/notistack'
 import { createVariables } from '@/utils'
 
-export function useFavoritePokemon(filters?: Filters, category?: Category) {
+export function useFavoritePokemon(
+  pokemon: Pokemon,
+  filters?: Filters,
+  category?: Category,
+) {
   const [favoritePokemon, { loading: isLoading }] = useFavoritePokemonMutation({
     onError: () => {
       enqueueSnackbar('Failed to add pokemon to favorites', {
@@ -30,9 +35,11 @@ export function useFavoritePokemon(filters?: Filters, category?: Category) {
       optimisticResponse: () => {
         return {
           favoritePokemon: {
-            __typename: 'Pokemon',
+            ...pokemon,
             id: new Date().toISOString(),
             isFavorite: true,
+            // Evolutions are missing data
+            maxHP: pokemon?.maxHP,
           },
         }
       },
@@ -45,13 +52,19 @@ export function useFavoritePokemon(filters?: Filters, category?: Category) {
         cache.updateQuery<Query>(
           { query: GET_POKEMONS, variables },
           (cachedQuery) => {
-            const pokemonEdges = cachedQuery?.pokemons.edges ?? []
-            const updatedPokemonEdges = [...pokemonEdges, data?.favoritePokemon]
+            if (!cachedQuery || !data?.favoritePokemon?.maxHP)
+              return cachedQuery
 
-            const updatedQuery = <Query>{
+            const pokemonEdges = cachedQuery?.pokemons.edges ?? []
+            const updatedPokemonEdges = [
+              ...pokemonEdges,
+              ...(data?.favoritePokemon ? [data.favoritePokemon] : []),
+            ]
+
+            const updatedQuery: Query = {
               ...cachedQuery,
               pokemons: {
-                ...(cachedQuery?.pokemons ?? {}),
+                ...cachedQuery.pokemons,
                 edges: updatedPokemonEdges,
               },
             }
@@ -98,12 +111,14 @@ export function useUnFavoritePokemon(filters?: Filters, category?: Category) {
         cache.updateQuery<Query, typeof variables>(
           { query: GET_POKEMONS, variables },
           (cachedQuery) => {
+            if (!cachedQuery) return cachedQuery
+
             const pokemonEdges = cachedQuery?.pokemons.edges ?? []
             const updatedPokemonEdges = pokemonEdges.filter((pokemon) => {
               return pokemon.id !== id
             })
 
-            const updatedQuery = <Query>{
+            const updatedQuery = {
               ...cachedQuery,
               pokemons: {
                 ...(cachedQuery?.pokemons ?? {}),

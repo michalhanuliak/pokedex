@@ -1,6 +1,10 @@
+'use client'
 import { DEFAULT_PAGE_SIZE } from '@/constants'
 import { Category, Filters } from '@/domain'
-import { useGetPokemonByNameQuery, useGetPokemonsQuery } from '@/infrastructure'
+import {
+  useGetPokemonByNameQuery,
+  useGetPokemonsQuery,
+} from '@/infrastructure/queries'
 import { enqueueSnackbar } from '@/lib/notistack'
 import { createAudioUrl, createVariables } from '@/utils'
 

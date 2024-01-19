@@ -1,14 +1,11 @@
-import { ViewSettingsContextProvider } from '@/contexts/useViewSettingsContext'
+import { ViewSettingsContextProvider } from '@/contexts'
 import { Category, Filters, View } from '@/domain'
-import { getClient } from '@/infrastructure/apollo-client'
-import {
-  GET_POKEMONS,
-  GET_POKEMON_TYPES,
-} from '@/infrastructure/queries/usePokemonQuery'
+import { getClient } from '@/infrastructure/apolloClient'
+import { GET_POKEMONS, GET_POKEMON_TYPES } from '@/infrastructure/queries'
 import { Stack } from '@/ui/atoms'
 import { PokemonsView } from '@/ui/layouts/PokemonsView'
-import { PokemonTabs } from '@/ui/organisms'
 import { PokemonFilters } from '@/ui/organisms/PokemonFilters'
+import { PokemonTabs } from '@/ui/organisms/PokemonTabs'
 import { createVariables, getPokemonTypeOptions } from '@/utils'
 import styles from './styles.module.scss'
 

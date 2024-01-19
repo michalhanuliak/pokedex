@@ -8,9 +8,10 @@ import { SnackbarProvider } from '@/lib/notistack'
 import { useMemo } from 'react'
 
 import { InfiniteScroll } from '@/lib/react-infinite-scroller'
+import Link from 'next/link'
 import { Text } from '../../atoms'
 import { TiltedCard } from '../../molecules'
-import { PokemonCardHeader } from '../../organisms'
+import { PokemonCardHeader } from '../../organisms/PokemonCardHeader'
 import styles from './styles.module.scss'
 
 type PokemonsViewProps = {
@@ -40,7 +41,9 @@ export function PokemonsView({ initPokemons = [] }: PokemonsViewProps) {
           />
         )
         return view === View.LIST ? (
-          Header
+          <Link key={id} href={`/${name.toLowerCase().replace(' ', '-')}`}>
+            {Header}
+          </Link>
         ) : (
           <TiltedCard
             key={id}

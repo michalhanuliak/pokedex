@@ -1,9 +1,9 @@
+import { HttpLink } from '@/lib/apollo-client'
 import {
   NextSSRApolloClient,
   NextSSRInMemoryCache,
   registerApolloClient,
 } from '@/lib/apollo-experimental'
-import { HttpLink } from '@apollo/client'
 
 export const { getClient } = registerApolloClient(() => {
   return new NextSSRApolloClient({
