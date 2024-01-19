@@ -13,9 +13,6 @@ Pokedex is a modern web application built using Next.js, integrated with Apollo 
 
 ### Installation
 
-Clone the repository and install dependencies:
-git clone [https://github.com/michalhanuliak/pokedex]
-cd Pokedex
 npm install // or yarn install
 
 ### Running the Application
