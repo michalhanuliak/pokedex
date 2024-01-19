@@ -1,9 +1,10 @@
 'use client'
 import { useGetAllPokemons } from '@/adapters/usePokemons'
 import { Category, Filters } from '@/domain'
-import { PokemonCard } from '@/ui/molecules/PokemonCard'
+import { TiltedCard } from '@/ui/molecules/TiltedCard'
 import { PokemonCardHeader } from '@/ui/organisms/PokemonCardHeader'
 import classNames from 'classnames'
+import InfiniteScroll from 'react-infinite-scroller'
 import styles from './styles.module.scss'
 
 type PokemonsViewProps = {
@@ -17,7 +18,7 @@ export function PokemonsView({
   filters,
   listView,
 }: PokemonsViewProps) {
-  const { pokemons, isLoading, loadNextPage } = useGetAllPokemons(
+  const { pokemons, isLoading, loadNextPage, hasNextPage } = useGetAllPokemons(
     activeCategory,
     filters,
   )
@@ -34,20 +35,24 @@ export function PokemonsView({
           height: 300,
         }}
         flat={listView}
+        filters={filters}
+        category={activeCategory}
       />
     )
     return listView ? (
       Header
     ) : (
-      <PokemonCard key={id} href={`/${name.toLowerCase().replace(' ', '-')}`}>
+      <TiltedCard key={id} href={`/${name.toLowerCase().replace(' ', '-')}`}>
         {Header}
-      </PokemonCard>
+      </TiltedCard>
     )
   })
 
   return (
-    <div className={classNames(styles.main, listView && styles.list)}>
-      {renderedPokemons}
-    </div>
+    <InfiniteScroll pageStart={0} loadMore={loadNextPage} hasMore={hasNextPage}>
+      <div className={classNames(styles.main, listView && styles.list)}>
+        {renderedPokemons}
+      </div>
+    </InfiniteScroll>
   )
 }

@@ -1,64 +1,93 @@
 import { Category, Filters } from '@/domain'
+import { Query } from '@/infrastructure/generated/types'
 import {
   GET_POKEMONS,
   useFavoritePokemonMutation,
-  useGetPokemonQuery,
+  useGetPokemonByNameQuery,
   useGetPokemonsQuery,
   useUnFavoritePokemonMutation,
 } from '@/infrastructure/queries/usePokemonQuery'
 import { createAudioUrl } from '@/utils'
 import { useApolloClient } from '@apollo/client'
-import { useEffect, useMemo, useState } from 'react'
+import { useLayoutEffect, useMemo, useState } from 'react'
 
 const DEFAULT_PAGE_SIZE = 20
 
-export function useGetAllPokemons(category: Category, filters: Filters) {
-  const client = useApolloClient()
-
-  const [currentPage, setCurrentPage] = useState(1)
-  const { data, loading: isLoading } = useGetPokemonsQuery({
-    variables: {
-      query: {
-        filter: {
-          isFavorite: category === Category.FAVORITE ? true : undefined,
-          type: filters?.type,
-        },
-        search: filters.query,
-        limit: currentPage * DEFAULT_PAGE_SIZE,
-        offset: (currentPage - 1) * DEFAULT_PAGE_SIZE,
+function createVariables(category?: Category, filters?: Filters) {
+  return {
+    query: {
+      filter: {
+        isFavorite: category === Category.FAVORITE ? true : undefined,
+        type: filters?.type,
       },
+      search: filters?.query,
+      limit: DEFAULT_PAGE_SIZE,
     },
-    onCompleted: (data) => {
-      client.cache.updateQuery({ query: GET_POKEMONS }, (prev) => {
-        return {
-          ...prev,
-          ...data,
-        }
-      })
-    },
+  }
+}
+
+export function useGetAllPokemons(category: Category, filters: Filters) {
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const variables = createVariables(category, filters)
+
+  const {
+    data,
+    loading: isLoading,
+    fetchMore,
+  } = useGetPokemonsQuery({
+    variables,
     onError: (error) => {
       console.error(error)
     },
   })
 
-  const loadNextPage = () => {
+  const hasNextPage = useMemo(
+    () => (data?.pokemons.count ?? NaN) > currentPage * DEFAULT_PAGE_SIZE,
+    [data],
+  )
+
+  const loadMore = async () => {
+    if (!hasNextPage) return
+    await fetchMore({
+      variables: {
+        ...variables,
+        query: {
+          ...variables.query,
+          offset: DEFAULT_PAGE_SIZE * currentPage,
+        },
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        return {
+          ...prev,
+          pokemons: {
+            ...prev.pokemons,
+            edges: [...prev.pokemons.edges, ...fetchMoreResult?.pokemons.edges],
+          },
+        }
+      },
+    })
     setCurrentPage((prev) => prev + 1)
   }
 
-  const pokemons = useMemo(() => {
-    if (!data) return []
-    return data.pokemons.edges
-  }, [data, category, currentPage, filters])
+  const pokemons = useMemo(() => data?.pokemons.edges ?? [], [data])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCurrentPage(1)
   }, [category, filters])
 
-  return { pokemons, isLoading, currentPage, loadNextPage }
+  return {
+    pokemons,
+    isLoading,
+    currentPage,
+    loadNextPage: loadMore,
+    hasNextPage,
+  }
 }
 
-export function useFavoritePokemon() {
+export function useFavoritePokemon(category?: Category, filters?: Filters) {
   const apolloClient = useApolloClient()
+
   const [favoritePokemon, { loading: isLoading }] = useFavoritePokemonMutation({
     onError: (error) => {
       console.error(error)
@@ -70,9 +99,36 @@ export function useFavoritePokemon() {
 
     favoritePokemon({
       variables: { id },
-    })
-    apolloClient.refetchQueries({
-      include: [GET_POKEMONS],
+      optimisticResponse: (variables) => {
+        return {
+          favoritePokemon: {
+            __typename: 'Pokemon',
+            id: variables.id,
+            isFavorite: true,
+          },
+        }
+      },
+      update: (cache, { data }) => {
+        const variables = createVariables(Category.FAVORITE, filters)
+
+        cache.updateQuery<Query>(
+          { query: GET_POKEMONS, variables },
+          (cachedQuery) => {
+            const pokemonEdges = cachedQuery?.pokemons.edges ?? []
+            const updatedPokemonEdges = [...pokemonEdges, data?.favoritePokemon]
+
+            const updatedQuery = <Query>{
+              ...cachedQuery,
+              pokemons: {
+                ...(cachedQuery?.pokemons ?? {}),
+                edges: updatedPokemonEdges,
+              },
+            }
+
+            return updatedQuery
+          },
+        )
+      },
     })
   }
 
@@ -82,9 +138,7 @@ export function useFavoritePokemon() {
   }
 }
 
-export function useUnFavoritePokemon() {
-  const apolloClient = useApolloClient()
-
+export function useUnFavoritePokemon(category?: Category, filters?: Filters) {
   const [unFavoritePokemon, { loading: isLoading }] =
     useUnFavoritePokemonMutation({
       onError: (error) => {
@@ -95,9 +149,31 @@ export function useUnFavoritePokemon() {
   const handleUnFavoritePokemon = (id?: string) => {
     if (!id) return
 
-    unFavoritePokemon({ variables: { id } })
-    apolloClient.refetchQueries({
-      include: [GET_POKEMONS],
+    unFavoritePokemon({
+      variables: { id },
+      update: (cache) => {
+        const variables = createVariables(category, filters)
+
+        cache.updateQuery<Query, typeof variables>(
+          { query: GET_POKEMONS, variables },
+          (cachedQuery) => {
+            const pokemonEdges = cachedQuery?.pokemons.edges ?? []
+            const updatedPokemonEdges = pokemonEdges.filter((pokemon) => {
+              return pokemon.id !== id
+            })
+
+            const updatedQuery = <Query>{
+              ...cachedQuery,
+              pokemons: {
+                ...(cachedQuery?.pokemons ?? {}),
+                edges: updatedPokemonEdges,
+              },
+            }
+
+            return updatedQuery
+          },
+        )
+      },
     })
   }
 
@@ -108,7 +184,7 @@ export function useUnFavoritePokemon() {
 }
 
 export function useGetPokemonByName(name: string) {
-  const { data, loading: isLoading } = useGetPokemonQuery({
+  const { data, loading: isLoading } = useGetPokemonByNameQuery({
     variables: {
       name,
     },

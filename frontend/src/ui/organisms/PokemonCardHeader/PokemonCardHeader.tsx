@@ -4,7 +4,6 @@ import {
 } from '@/adapters/usePokemons'
 import { Pokemon } from '@/domain'
 import { CardHeader, CardHeaderProps } from '@/ui/molecules/CardHeader'
-import { MouseEvent } from 'react'
 
 export type PokemonCardHeaderProps = {
   pokemon: Pokemon
@@ -15,14 +14,14 @@ export type PokemonCardHeaderProps = {
 
 export function PokemonCardHeader({
   pokemon: { id, name, image, isFavorite, types },
+  filters,
+  category,
   imageProps,
   flat = false,
   hideTypes = false,
 }: PokemonCardHeaderProps) {
-  const { handleFavoritePokemon, isLoading: isFavouriteMutating } =
-    useFavoritePokemon()
-  const { handleUnFavoritePokemon, isLoading: isUnFavouriteMutating } =
-    useUnFavoritePokemon()
+  const { handleFavoritePokemon } = useFavoritePokemon(category, filters)
+  const { handleUnFavoritePokemon } = useUnFavoritePokemon(category, filters)
 
   const onFavoriteChange = isFavorite
     ? handleUnFavoritePokemon
@@ -37,8 +36,8 @@ export function PokemonCardHeader({
       flat={flat}
       name={name}
       favorite={isFavorite}
-      onFavoriteChange={(event: MouseEvent<Element>) => {
-        event.preventDefault()
+      onFavoriteChange={(event) => {
+        event?.preventDefault()
         onFavoriteChange(id)
       }}
       description={hideTypes ? '' : types.join(', ')}

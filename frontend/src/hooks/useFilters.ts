@@ -1,12 +1,16 @@
 'use client'
 
-import { View } from '@/domain'
+import { Filters, View } from '@/domain'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useState } from 'react'
+import { useDebounce } from 'react-use'
 
-export function useFilters() {
+export function useFilters(filters: Filters) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
+
+  const [search, setSearch] = useState(filters.query ?? '')
 
   const handleTypeChange = (type: string) => {
     const params = new URLSearchParams(searchParams)
@@ -14,17 +18,6 @@ export function useFilters() {
       params.delete('type')
     } else {
       params.set('type', type)
-    }
-
-    replace(`${pathname}?${params.toString()}`)
-  }
-
-  const handleSearch = (query: string) => {
-    const params = new URLSearchParams(searchParams)
-    if (query === '' || query === undefined) {
-      params.delete('query')
-    } else {
-      params.set('query', query)
     }
 
     replace(`${pathname}?${params.toString()}`)
@@ -41,5 +34,28 @@ export function useFilters() {
     replace(`${pathname}?${params.toString()}`)
   }
 
-  return { handleTypeChange, handleSearch, handleViewChange }
+  const handleSearch = (query: string) => {
+    const params = new URLSearchParams(searchParams)
+    if (query === '' || query === undefined) {
+      params.delete('query')
+    } else {
+      params.set('query', query)
+    }
+
+    replace(`${pathname}?${params.toString()}`)
+  }
+
+  const handleSearchChange = (query: string) => {
+    setSearch(query)
+  }
+
+  useDebounce(
+    () => {
+      handleSearch(search)
+    },
+    300,
+    [search],
+  )
+
+  return { search, handleTypeChange, handleSearchChange, handleViewChange }
 }

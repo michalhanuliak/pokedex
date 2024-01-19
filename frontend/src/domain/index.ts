@@ -1,4 +1,7 @@
-import { Pokemon as GeneratedPokemon } from '@/infrastructure/generated/types'
+import {
+  Pokemon as GeneratedPokemon,
+  Maybe,
+} from '@/infrastructure/generated/types'
 
 export type Pokemon = Pick<
   GeneratedPokemon,
@@ -8,6 +11,12 @@ export type Pokemon = Pick<
 export type Filters = {
   query: string
   type: string
+}
+
+export type PartialPokemonMutation = {
+  __typename?: 'Mutation'
+  favoritePokemon?: Maybe<Partial<Pokemon>>
+  unFavoritePokemon?: Maybe<Partial<Pokemon>>
 }
 
 export enum Category {

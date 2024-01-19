@@ -1,3 +1,4 @@
+import { PartialPokemonMutation } from '@/domain'
 import {
   MutationHookOptions,
   QueryHookOptions,
@@ -6,7 +7,6 @@ import {
   useQuery,
 } from '@apollo/client'
 import {
-  Mutation,
   MutationFavoritePokemonArgs,
   MutationUnFavoritePokemonArgs,
   Query,
@@ -52,6 +52,7 @@ export const GET_POKEMONS = gql`
   ${POKEMON_FRAGMENT}
   query GetPokemons($query: PokemonsQueryInput!) {
     pokemons(query: $query) {
+      count
       edges {
         ...Pokemon
       }
@@ -59,10 +60,13 @@ export const GET_POKEMONS = gql`
   }
 `
 
-export const useGetPokemonsQuery = (
-  baseOptions?: QueryHookOptions<Query, QueryPokemonsArgs>,
+export const useGetPokemonsQuery = <
+  T extends Pick<Query, 'pokemons'>,
+  D extends QueryPokemonsArgs,
+>(
+  baseOptions?: QueryHookOptions<T, D>,
 ) => {
-  return useQuery<Query, QueryPokemonsArgs>(GET_POKEMONS, baseOptions)
+  return useQuery<T, D>(GET_POKEMONS, baseOptions)
 }
 
 export const FAVORITE_POKEMON_MUTATION = gql`
@@ -74,13 +78,13 @@ export const FAVORITE_POKEMON_MUTATION = gql`
   }
 `
 
-export const useFavoritePokemonMutation = (
-  baseOptions?: MutationHookOptions<Mutation, MutationFavoritePokemonArgs>,
+export const useFavoritePokemonMutation = <
+  T extends Pick<PartialPokemonMutation, 'favoritePokemon'>,
+  D extends MutationFavoritePokemonArgs,
+>(
+  baseOptions?: MutationHookOptions<T, D>,
 ) => {
-  return useMutation<Mutation, MutationFavoritePokemonArgs>(
-    FAVORITE_POKEMON_MUTATION,
-    baseOptions,
-  )
+  return useMutation<T, D>(FAVORITE_POKEMON_MUTATION, baseOptions)
 }
 
 export const UNFAVORITE_POKEMON_MUTATION = gql`
@@ -92,13 +96,13 @@ export const UNFAVORITE_POKEMON_MUTATION = gql`
   }
 `
 
-export const useUnFavoritePokemonMutation = (
-  baseOptions?: MutationHookOptions<Mutation, MutationUnFavoritePokemonArgs>,
+export const useUnFavoritePokemonMutation = <
+  T extends Pick<PartialPokemonMutation, 'unFavoritePokemon'>,
+  D extends MutationUnFavoritePokemonArgs,
+>(
+  baseOptions?: MutationHookOptions<T, D>,
 ) => {
-  return useMutation<Mutation, MutationUnFavoritePokemonArgs>(
-    UNFAVORITE_POKEMON_MUTATION,
-    baseOptions,
-  )
+  return useMutation<T, D>(UNFAVORITE_POKEMON_MUTATION, baseOptions)
 }
 
 export const GET_POKEMON = gql`
@@ -110,8 +114,23 @@ export const GET_POKEMON = gql`
   }
 `
 
-export const useGetPokemonQuery = (
-  baseOptions?: QueryHookOptions<Query, QueryPokemonByNameArgs>,
+export const useGetPokemonByNameQuery = <
+  T extends Pick<Query, 'pokemonByName'>,
+  D extends QueryPokemonByNameArgs,
+>(
+  baseOptions?: QueryHookOptions<T, D>,
 ) => {
-  return useQuery<Query, QueryPokemonByNameArgs>(GET_POKEMON, baseOptions)
+  return useQuery<T, D>(GET_POKEMON, baseOptions)
+}
+
+export const GET_POKEMON_TYPES = gql`
+  query GetPokemonTypes {
+    pokemonTypes
+  }
+`
+
+export const useGetPokemoTypesQuery = <T extends Query>(
+  baseOptions?: QueryHookOptions<T>,
+) => {
+  return useQuery<T>(GET_POKEMON_TYPES, baseOptions)
 }

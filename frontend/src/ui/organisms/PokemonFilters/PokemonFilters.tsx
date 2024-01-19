@@ -17,7 +17,8 @@ export function PokemonFilters({
   filters,
   listView = false,
 }: PokemonFiltersProps) {
-  const { handleTypeChange, handleSearch, handleViewChange } = useFilters()
+  const { search, handleTypeChange, handleSearchChange, handleViewChange } =
+    useFilters(filters)
 
   const { options } = usePokemonTypeOptions()
 
@@ -25,12 +26,14 @@ export function PokemonFilters({
     <Stack className={styles.main}>
       <Stack>
         <TextField
-          onChange={(_, value) => handleSearch(value)}
+          onChange={(_, value) => handleSearchChange(value)}
           placeholder="Search"
+          value={search}
         />
         <Select
           options={options}
           onChange={(_, value) => handleTypeChange(value)}
+          value={filters.type}
         />
       </Stack>
       <Stack>

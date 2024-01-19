@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { ChangeEvent, HTMLAttributes } from 'react'
+import { ChangeEvent, SelectHTMLAttributes } from 'react'
 import styles from './styles.module.scss'
 
 export type OptionProps = {
@@ -8,7 +8,7 @@ export type OptionProps = {
 }
 
 export type DefaultSelectProps = Omit<
-  HTMLAttributes<HTMLSelectElement>,
+  SelectHTMLAttributes<HTMLSelectElement>,
   'onChange'
 >
 
