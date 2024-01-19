@@ -1,4 +1,9 @@
 .main {
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+    row-gap: 2rem;
+  }
 }

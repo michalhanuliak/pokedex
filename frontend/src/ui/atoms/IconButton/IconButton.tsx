@@ -21,10 +21,10 @@ export function IconButton({
     <button
       onClick={onClick}
       className={classNames(
-        className,
         styles.main,
         hideShadow && styles.noShadow,
         active && styles.active,
+        className,
       )}
     >
       {icon}

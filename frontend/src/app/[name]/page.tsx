@@ -1,4 +1,5 @@
 import { PokemonDetail } from '@/ui/layouts/PokemonDetail/PokemonDetail'
+import styles from './styles.module.scss'
 
 type Props = {
   params: {
@@ -8,7 +9,7 @@ type Props = {
 
 export default function Detail({ params }: Props) {
   return (
-    <main>
+    <main className={styles.main}>
       <PokemonDetail name={params.name} />
     </main>
   )

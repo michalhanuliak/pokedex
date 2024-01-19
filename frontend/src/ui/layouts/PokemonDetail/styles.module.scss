@@ -1,0 +1,52 @@
+.main {
+  padding: 4rem 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 2rem;
+  column-gap: 4rem;
+  position: relative;
+  @media screen and (min-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.imageContainer {
+  position: relative;
+  justify-content: center;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  max-width: 50rem;
+  object-fit: contain;
+}
+
+.speaker,
+.backButton {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  @media screen and (min-width: 600px) {
+    left: 2rem;
+    bottom: 2rem;
+  }
+  svg {
+    fill: var(--color-background);
+  }
+}
+
+.speaker {
+  // I was unable to find a way to override the styles from the IconButton component
+  background: var(--color-secondary) !important;
+}
+
+.backButton {
+  bottom: unset;
+  top: 2rem;
+  z-index: 99;
+  background: var(--color-background);
+  svg {
+    fill: var(--color-secondary);
+  }
+}

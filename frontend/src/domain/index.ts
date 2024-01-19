@@ -5,7 +5,18 @@ import {
 
 export type Pokemon = Pick<
   GeneratedPokemon,
-  'id' | 'name' | 'types' | 'image' | 'isFavorite'
+  | 'id'
+  | 'name'
+  | 'types'
+  | 'image'
+  | 'isFavorite'
+  | 'maxHP'
+  | 'maxCP'
+  | 'weight'
+  | 'height'
+  | 'weaknesses'
+  | 'resistant'
+  | 'attacks'
 >
 
 export type Filters = {

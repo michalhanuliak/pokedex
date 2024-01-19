@@ -39,6 +39,18 @@ const POKEMON_DETAIL_FRAGMENT = gql`
     }
     maxHP
     maxCP
+    attacks {
+      special {
+        damage
+        type
+      }
+      fast {
+        damage
+        type
+      }
+    }
+    resistant
+    weaknesses
     evolutions {
       id
       name

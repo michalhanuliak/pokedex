@@ -3,11 +3,12 @@ import {
   useUnFavoritePokemon,
 } from '@/adapters/usePokemons'
 import { Pokemon } from '@/domain'
-import { CardHeader, CardHeaderProps } from '@/ui/molecules/CardHeader'
+import { CardHeader } from '@/ui/molecules/CardHeader'
+import { ImageProps } from 'next/image'
 
 export type PokemonCardHeaderProps = {
   pokemon: Pokemon
-  imageProps: Omit<CardHeaderProps['imageProps'], 'src'>
+  imageProps?: Omit<ImageProps, 'src'>
   hideTypes?: boolean
   flat?: boolean
 }
@@ -29,10 +30,14 @@ export function PokemonCardHeader({
 
   return (
     <CardHeader
-      imageProps={{
-        ...imageProps,
-        src: image,
-      }}
+      imageProps={
+        flat || !imageProps
+          ? undefined
+          : {
+              ...imageProps,
+              src: image,
+            }
+      }
       flat={flat}
       name={name}
       favorite={isFavorite}

@@ -1,7 +1,8 @@
 import { Pokemon } from '@/domain'
-import { Stack } from '@/ui/atoms'
-import { Card } from '@/ui/molecules'
+import { Stack, Text } from '@/ui/atoms'
+import { TiltedCard } from '@/ui/molecules'
 import { PokemonCardHeader } from '@/ui/organisms/PokemonCardHeader'
+import styles from './styles.module.scss'
 
 export type PokemonEvolutionsProps = {
   evolutions: Pokemon[]
@@ -10,7 +11,7 @@ export type PokemonEvolutionsProps = {
 export function PokemonEvolutions({ evolutions }: PokemonEvolutionsProps) {
   const renderedEvolutions = evolutions.map((evolution) => {
     return (
-      <Card key={evolution.id}>
+      <TiltedCard key={evolution.id} href={`/${evolution.name}`}>
         <PokemonCardHeader
           pokemon={evolution}
           imageProps={{
@@ -20,12 +21,16 @@ export function PokemonEvolutions({ evolutions }: PokemonEvolutionsProps) {
           }}
           hideTypes
         />
-      </Card>
+      </TiltedCard>
     )
   })
   return (
-    <Stack column>
-      <Stack>{renderedEvolutions}</Stack>
+    <Stack column className={styles.main}>
+      <Text variant="title">Evolutions</Text>
+      {renderedEvolutions.length === 0 && (
+        <Text>This is the highest evolution</Text>
+      )}
+      <Stack className={styles.container}>{renderedEvolutions}</Stack>
     </Stack>
   )
 }

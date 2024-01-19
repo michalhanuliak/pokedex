@@ -8,28 +8,30 @@ import { Stack, Text } from '../../atoms'
 import styles from './styles.module.scss'
 
 export type CardHeaderProps = {
-  imageProps: ImageProps
   name: string
-  description?: string
   favorite: boolean
   onFavoriteChange: (e: MouseEvent) => void
-  flat: boolean
+  description?: string
+  imageProps?: ImageProps
+  flat?: boolean
 }
 
 export function CardHeader({
   imageProps,
   name,
-  description,
   favorite,
   onFavoriteChange,
+  description,
   flat = false,
 }: CardHeaderProps) {
   return (
     <Stack className={classNames(styles.main, flat && styles.flat)} column>
-      <Image
-        {...imageProps}
-        className={classNames(styles.image, flat && styles.hidden)}
-      />
+      {imageProps && (
+        <Image
+          {...imageProps}
+          className={classNames(styles.image, flat && styles.hidden)}
+        />
+      )}
       <Stack className={styles.container}>
         <Stack
           column

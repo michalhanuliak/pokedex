@@ -1,0 +1,8 @@
+.main {
+  margin: 0 auto;
+  padding: 0 5%;
+  @media screen and (min-width: 600px) {
+    max-width: 160rem;
+    padding: 0 3.2rem;
+  }
+}
