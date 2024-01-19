@@ -7,6 +7,8 @@ export const GET_POKEMONS = gql`
       edges {
         id
         name
+        types
+        image
       }
     }
   }
