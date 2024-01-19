@@ -1,6 +1,6 @@
 'use client'
 import { Category, Filters, View } from '@/domain'
-import { useFilters } from '@/hooks/useFilters'
+import { useFilters } from '@/hooks'
 import { PropsWithChildren, createContext, useContext, useMemo } from 'react'
 
 export type ViewSettingsContextType = ReturnType<typeof useFilters> & {

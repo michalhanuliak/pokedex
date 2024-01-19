@@ -1,9 +1,9 @@
 'use client'
 
 import { Filters, View } from '@/domain'
+import { useDebounce } from '@/lib/react-use'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
-import { useDebounce } from 'react-use'
 
 export function useFilters(filters: Filters) {
   const searchParams = useSearchParams()

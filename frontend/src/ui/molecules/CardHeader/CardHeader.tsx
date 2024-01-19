@@ -1,5 +1,5 @@
 'use client'
-import classNames from 'classnames'
+import { classNames } from '@/lib/classNames'
 import Image, { ImageProps } from 'next/image'
 import { MouseEvent } from 'react'
 import { IconButton, Stack, Text } from '../../atoms'

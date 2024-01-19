@@ -1,7 +1,7 @@
 'use client'
+import { Tilt } from '@/lib/react-parallax-tilt'
 import Link from 'next/link'
 import { PropsWithChildren } from 'react'
-import Tilt from 'react-parallax-tilt'
 import { Card } from '../Card'
 
 export type TiltedCardProps = PropsWithChildren<{

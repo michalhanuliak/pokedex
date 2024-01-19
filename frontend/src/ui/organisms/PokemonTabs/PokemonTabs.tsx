@@ -1,6 +1,6 @@
 import { Category } from '@/domain'
-import { Stack } from '@/ui/atoms'
-import { Tab } from '@/ui/molecules'
+import { Stack } from '../../atoms'
+import { Tab } from '../../molecules'
 import styles from './styles.module.scss'
 
 type PokemonTabsProps = {

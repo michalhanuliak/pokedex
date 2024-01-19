@@ -1,6 +1,6 @@
 import { useGetPokemoTypesQuery } from '@/infrastructure/queries/usePokemonQuery'
+import { enqueueSnackbar } from '@/lib/notistack'
 import { getPokemonTypeOptions } from '@/utils'
-import { enqueueSnackbar } from 'notistack'
 import { useMemo } from 'react'
 
 export function usePokemonTypeOptions() {

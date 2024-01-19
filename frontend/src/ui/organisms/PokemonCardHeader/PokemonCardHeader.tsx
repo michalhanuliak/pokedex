@@ -1,13 +1,10 @@
-import {
-  useFavoritePokemon,
-  useUnFavoritePokemon,
-} from '@/adapters/usePokemons'
-import { useViewSettingsContext } from '@/contexts/useViewSettingsContext'
+import { useFavoritePokemon, useUnFavoritePokemon } from '@/adapters'
+import { useViewSettingsContext } from '@/contexts'
 import { Pokemon, View } from '@/domain'
-import { CardHeader } from '@/ui/molecules/CardHeader'
 import { ImageProps } from 'next/image'
 import { useState } from 'react'
-import { PokemonDetailModal } from '../PokemonDetailModal/PokemonDetailModal'
+import { CardHeader } from '../../molecules'
+import { PokemonDetailModal } from '../PokemonDetailModal'
 import styles from './styles.module.scss'
 
 export type PokemonCardHeaderProps = {

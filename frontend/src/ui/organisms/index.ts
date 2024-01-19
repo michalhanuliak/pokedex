@@ -1,2 +1,5 @@
-export * from '../molecules/TiltedCard'
+export * from './PokemonCardHeader'
+export * from './PokemonDetailModal'
+export * from './PokemonFilters'
+export * from './PokemonStats'
 export * from './PokemonTabs'

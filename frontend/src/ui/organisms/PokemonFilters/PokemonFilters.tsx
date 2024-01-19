@@ -2,11 +2,8 @@
 import { usePokemonTypeOptions } from '@/adapters/useOptions'
 import { useViewSettingsContext } from '@/contexts/useViewSettingsContext'
 import { View } from '@/domain'
-import { Stack } from '@/ui/atoms'
-import { IconButton } from '@/ui/atoms/IconButton'
-import { Select } from '@/ui/atoms/Select'
-import { TextField } from '@/ui/atoms/TextField'
-import { ListIcon, SquaresFourIcon } from '@/ui/icons'
+import { IconButton, Select, Stack, TextField } from '../../atoms'
+import { ListIcon, SquaresFourIcon } from '../../icons'
 import styles from './styles.module.scss'
 
 export type PokemonFiltersProps = {

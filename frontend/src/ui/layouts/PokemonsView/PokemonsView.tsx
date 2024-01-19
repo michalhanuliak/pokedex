@@ -1,14 +1,16 @@
 'use client'
-import { useGetAllPokemons } from '@/adapters/usePokemons'
-import { useViewSettingsContext } from '@/contexts/useViewSettingsContext'
+import { useGetAllPokemons } from '@/adapters'
+import { useViewSettingsContext } from '@/contexts'
 import { Pokemon, View } from '@/domain'
-import { Text } from '@/ui/atoms'
-import { TiltedCard } from '@/ui/molecules/TiltedCard'
-import { PokemonCardHeader } from '@/ui/organisms/PokemonCardHeader'
-import classNames from 'classnames'
-import { SnackbarProvider } from 'notistack'
+
+import { classNames } from '@/lib/classNames'
+import { SnackbarProvider } from '@/lib/notistack'
 import { useMemo } from 'react'
-import InfiniteScroll from 'react-infinite-scroller'
+
+import { InfiniteScroll } from '@/lib/react-infinite-scroller'
+import { Text } from '../../atoms'
+import { TiltedCard } from '../../molecules'
+import { PokemonCardHeader } from '../../organisms'
 import styles from './styles.module.scss'
 
 type PokemonsViewProps = {

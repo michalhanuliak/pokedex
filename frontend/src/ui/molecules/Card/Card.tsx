@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import classNames from 'classnames'
+import { classNames } from '@/lib/classNames'
 import { Stack } from '../../atoms'
 import styles from './styles.module.scss'
 

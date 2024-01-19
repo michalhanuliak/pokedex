@@ -1,6 +1,6 @@
 import { DEFAULT_PAGE_SIZE } from '@/constants'
 import { Category, Filters } from '@/domain'
-import { Query } from '@/infrastructure/generated/types'
+import { Query } from '@/infrastructure/'
 
 export async function createAudioUrl(
   arrayBuffer: ArrayBuffer,

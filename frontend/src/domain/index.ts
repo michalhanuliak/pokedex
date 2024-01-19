@@ -1,7 +1,4 @@
-import {
-  Pokemon as GeneratedPokemon,
-  Maybe,
-} from '@/infrastructure/generated/types'
+import { Pokemon as GeneratedPokemon, Maybe } from '@/infrastructure'
 
 export type Pokemon = Pick<
   GeneratedPokemon,

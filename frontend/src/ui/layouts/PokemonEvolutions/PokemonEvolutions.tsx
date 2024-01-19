@@ -1,7 +1,8 @@
 import { Pokemon } from '@/domain'
-import { Stack, Text } from '@/ui/atoms'
-import { TiltedCard } from '@/ui/molecules'
-import { PokemonCardHeader } from '@/ui/organisms/PokemonCardHeader'
+import { useMemo } from 'react'
+import { Stack, Text } from '../../atoms'
+import { TiltedCard } from '../../molecules'
+import { PokemonCardHeader } from '../../organisms'
 import styles from './styles.module.scss'
 
 export type PokemonEvolutionsProps = {
@@ -9,22 +10,26 @@ export type PokemonEvolutionsProps = {
 }
 
 export function PokemonEvolutions({ evolutions }: PokemonEvolutionsProps) {
-  const renderedEvolutions = evolutions.map((evolution) => {
-    return (
-      <TiltedCard key={evolution.id} href={`/${evolution.name}`}>
-        <PokemonCardHeader
-          pokemon={evolution}
-          imageProps={{
-            alt: `Evolution ${name}`,
-            width: 300,
-            height: 300,
-          }}
-          hideTypes
-          hideModalButton
-        />
-      </TiltedCard>
-    )
-  })
+  const renderedEvolutions = useMemo(
+    () =>
+      evolutions.map((evolution) => {
+        return (
+          <TiltedCard key={evolution.id} href={`/${evolution.name}`}>
+            <PokemonCardHeader
+              pokemon={evolution}
+              imageProps={{
+                alt: `Evolution ${name}`,
+                width: 300,
+                height: 300,
+              }}
+              hideTypes
+              hideModalButton
+            />
+          </TiltedCard>
+        )
+      }),
+    [evolutions],
+  )
   return (
     <Stack column className={styles.main}>
       <Text variant="title">Evolutions</Text>

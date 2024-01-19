@@ -1,5 +1,4 @@
-import { Stack } from '../../atoms/Stack'
-import { Text } from '../../atoms/Text'
+import { Stack, Text } from '../../atoms'
 import styles from './styles.module.scss'
 
 export type StatRowProps = {

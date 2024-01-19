@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import { classNames } from '@/lib/classNames'
 import { useState } from 'react'
 import { Stack, Text } from '../../atoms'
 import styles from './styles.module.scss'

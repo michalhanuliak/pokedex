@@ -1,4 +1,4 @@
-import { PokemonDetail } from '@/ui/layouts/PokemonDetail/PokemonDetail'
+import { PokemonDetail } from '@/ui/layouts'
 import { Metadata } from 'next'
 import styles from './styles.module.scss'
 

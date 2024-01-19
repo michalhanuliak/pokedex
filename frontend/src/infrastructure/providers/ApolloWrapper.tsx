@@ -1,13 +1,11 @@
 'use client'
-// ^ this file needs the "use client" pragma
-
-import { ApolloLink, HttpLink } from '@apollo/client'
+import { ApolloLink, HttpLink } from '@/lib/apollo-client'
 import {
   ApolloNextAppProvider,
   NextSSRApolloClient,
   NextSSRInMemoryCache,
   SSRMultipartLink,
-} from '@apollo/experimental-nextjs-app-support/ssr'
+} from '@/lib/apollo-experimental'
 
 function makeClient() {
   const httpLink = new HttpLink({

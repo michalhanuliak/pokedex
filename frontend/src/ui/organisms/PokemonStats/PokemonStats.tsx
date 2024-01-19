@@ -1,9 +1,7 @@
 'use client'
 import { Pokemon } from '@/domain'
-import { Stack } from '@/ui/atoms'
-import { Text } from '@/ui/atoms/Text'
-import { Card } from '@/ui/molecules'
-import { StatRow } from '@/ui/molecules/StatRow/StatRow'
+import { Stack, Text } from '../../atoms'
+import { Card, StatRow } from '../../molecules'
 import styles from './styles.module.scss'
 
 export type PokemonStatsProps = {
