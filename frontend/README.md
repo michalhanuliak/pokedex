@@ -43,3 +43,7 @@ Storybook will be available at http://localhost:6006.
 
 Vitest is used for writing and running unit tests. To execute the tests:
 npm run test // or yarn test
+
+### Rexporting of 3rd party libraries
+
+3rd party libraries are reexported for sake of grouping side effects and in case of library breaking changes, easier replacement.

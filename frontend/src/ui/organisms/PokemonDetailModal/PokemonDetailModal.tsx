@@ -22,6 +22,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
     width: '100%',
     maxWidth: '50rem',
+    maxHeight: '90%',
   },
 }
 
